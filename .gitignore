@@ -6,6 +6,10 @@
 .pnp.js
 /server/node_modules
 
+# keys
+/server/config
+/my-bookshelf/src/apiKey.js
+
 
 # testing
 /coverage
