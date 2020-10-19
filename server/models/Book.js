@@ -3,17 +3,23 @@ const Schema = mongoose.Schema;
 
 // Create Schema
 const BookSchema = new Schema({
-  title: String,
+  title: {
+    type: String,
+    required: true,
+  },
   subtitle: String,
-  author: String,
+  author: {
+    type: String,
+    required: true,
+  },
   publishedDate: String,
   description: String,
-  image: String,
-  dateAdded: { type: Date, default: Date.now },
-  category: {
+  image: {
     type: String,
-    required: false,
+    required: true,
   },
+  dateAdded: { type: Date, default: Date.now },
+  category: String,
 });
 
 module.exports = Book = mongoose.model("book", BookSchema);

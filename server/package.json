@@ -4,8 +4,11 @@
   "description": "Server side of digital bookshelf",
   "main": "server.js",
   "scripts": {
+    "client-install": "npm install --prefix ../my-bookshelf",
     "start": "node server.js",
-    "server": "nodemon server.js"
+    "server": "nodemon server.js",
+    "client": "npm start --prefix ../my-bookshelf",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "Jake Morris",
   "license": "MIT",

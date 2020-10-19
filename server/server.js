@@ -19,7 +19,7 @@ mongoose
   .catch((err) => console.log(err));
 
 //Use Routes
-app.use("./api/Books", books);
+app.use("/api/books", books);
 
 const port = process.env.PORT || 7000;
 
