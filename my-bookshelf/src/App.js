@@ -1,16 +1,14 @@
 import React from "react";
-import logo from "./logo.svg";
+
+import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
-import Book from "./components/Book";
+import NavBar from "./components/NavBar";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Book />
-      </header>
+      <NavBar />
     </div>
   );
 }
