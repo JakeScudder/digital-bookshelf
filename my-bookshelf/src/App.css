@@ -7,13 +7,15 @@
   height: 650px;
 }
 
-.collapse-show {
+.show-this {
+  height: 875px;
+  transition: height 2s ease;
   overflow: hidden;
-  transition: transform 0.5s ease-out;
-  height: auto;
-  transform: scaleY(1);
 }
 
-.collapse {
-  transform: scaleY(0);
+.hide-this {
+  display: block;
+  transition: height 1s ease;
+  opacity: 0;
+  height: 0;
 }

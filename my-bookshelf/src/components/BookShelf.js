@@ -4,7 +4,6 @@ import {
   ListGroup,
   ListGroupItem,
   Button,
-  Collapse,
   Card,
   CardBody,
 } from "reactstrap";
@@ -67,10 +66,10 @@ const BookShelf = (props) => {
     console.log(id);
     let element = document.getElementById(id);
     console.log(element);
-    if (element.className === "collapse") {
-      element.className = "collapse-show";
+    if (element.className === "hide-this") {
+      element.className = "show-this";
     } else {
-      element.className = "collapse";
+      element.className = "hide-this";
     }
   };
 
@@ -119,7 +118,7 @@ const BookShelf = (props) => {
                     >
                       Show Description
                     </Button>
-                    <Collapse id={id}>
+                    <div id={id} className="hide-this">
                       <Card>
                         <CardBody>
                           <h1 className="title">{title}</h1>
@@ -128,14 +127,14 @@ const BookShelf = (props) => {
                           <h5 className="date-published">
                             Published on: {publishedDate}
                           </h5>
-                          <p className="description">{description}</p>
                           <p className="date-added">
-                            Book added on:{dateAdded}
+                            Added to Digital Bookshelf on:{dateAdded}
                           </p>
                           <p className="category">Category: {category}</p>
+                          <p className="description">{description}</p>
                         </CardBody>
                       </Card>
-                    </Collapse>
+                    </div>
                   </ListGroupItem>
                 </CSSTransition>
               )
