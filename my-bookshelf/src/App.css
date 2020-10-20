@@ -1,0 +1,19 @@
+.book-list {
+  display: flex;
+}
+
+.book-cover {
+  width: 440px;
+  height: 650px;
+}
+
+.collapse-show {
+  overflow: hidden;
+  transition: transform 0.5s ease-out;
+  height: auto;
+  transform: scaleY(1);
+}
+
+.collapse {
+  transform: scaleY(0);
+}

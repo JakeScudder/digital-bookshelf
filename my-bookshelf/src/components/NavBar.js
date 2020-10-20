@@ -18,14 +18,14 @@ const NavBar = (props) => {
 
   return (
     <div>
-      <Navbar dark expand="sm" className="bg-primary mb-5">
+      <Navbar dark="true" expand="sm" className="bg-primary mb-5">
         <Container>
-          <NavbarBrand href="/">Book List</NavbarBrand>
+          <NavbarBrand href="/">My Bookshelf</NavbarBrand>
           <NavbarToggler onClick={toggle} />
           <Collapse isOpen={isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <NavLink href="https://google.com">Github</NavLink>
+                <NavLink href="https://github.com/JakeScudder">Github</NavLink>
               </NavItem>
             </Nav>
           </Collapse>

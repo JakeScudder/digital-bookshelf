@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { Container, ListGroup, ListGroupItem, Button } from "reactstrap";
+import {
+  Container,
+  ListGroup,
+  ListGroupItem,
+  Button,
+  Collapse,
+  Card,
+  CardBody,
+} from "reactstrap";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { v4 as uuidv4 } from "uuid";
 
@@ -54,23 +62,29 @@ const BookShelf = (props) => {
     },
   ]);
 
-  const [isOpen, setIsOpen] = useState(false);
-
-  const toggle = () => setIsOpen(!isOpen);
+  // Function shows book details based on id
+  const showDetails = (id) => {
+    console.log(id);
+    let element = document.getElementById(id);
+    console.log(element);
+    if (element.className === "collapse") {
+      element.className = "collapse-show";
+    } else {
+      element.className = "collapse";
+    }
+  };
 
   return (
     <div>
       <Container>
         <Button
-          dark
+          dark="true"
           className="bg-primary"
           style={{ marginBottom: "2rem" }}
           onClick={() => {
-            {
-              const title = prompt("Add Book Title");
-              if (title) {
-                setBooks((books) => books.concat({ id: uuidv4(), title }));
-              }
+            const title = prompt("Add Book Title");
+            if (title) {
+              setBooks((books) => books.concat({ id: uuidv4(), title }));
             }
           }}
         >
@@ -92,16 +106,36 @@ const BookShelf = (props) => {
               }) => (
                 <CSSTransition key={id} timeout={600} classNames="fade">
                   <ListGroupItem>
-                    <img src={image}></img>
-                    <h1 className="title">{title}</h1>
-                    <h2 className="subtitle">{subtitle}</h2>
-                    <h4 className="author">{author}</h4>
-                    <h5 className="date-published">
-                      Published on: {publishedDate}
-                    </h5>
-                    <p className="description">{description}</p>
-                    <p className="date-added">Book added on:{dateAdded}</p>
-                    <p className="category">Category: {category}</p>
+                    <img
+                      className="book-cover"
+                      src={image}
+                      alt="Book Cover"
+                    ></img>
+                    {/* Button passes the id of the collapse element to the handleClick function with an anonymous function */}
+                    <Button
+                      color="primary"
+                      onClick={() => showDetails(id)}
+                      style={{ marginBottom: "1rem" }}
+                    >
+                      Show Description
+                    </Button>
+                    <Collapse id={id}>
+                      <Card>
+                        <CardBody>
+                          <h1 className="title">{title}</h1>
+                          <h2 className="subtitle">{subtitle}</h2>
+                          <h4 className="author">{author}</h4>
+                          <h5 className="date-published">
+                            Published on: {publishedDate}
+                          </h5>
+                          <p className="description">{description}</p>
+                          <p className="date-added">
+                            Book added on:{dateAdded}
+                          </p>
+                          <p className="category">Category: {category}</p>
+                        </CardBody>
+                      </Card>
+                    </Collapse>
                   </ListGroupItem>
                 </CSSTransition>
               )
