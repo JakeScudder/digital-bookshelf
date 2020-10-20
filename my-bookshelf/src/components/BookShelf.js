@@ -19,7 +19,7 @@ const BookShelf = (props) => {
       author: "Brandon Sanderson",
       publishedDate: "2010-04-01",
       description:
-        'For a thousand years the ash fell and no flowers bloomed. For a thousand years the Skaa slaved in misery and lived in fear. For a thousand years the Lord Ruler, the "Sliver of Infinity," reigned with absolute power and ultimate terror, divinely invincible. Then, when hope was so long lost that not even its memory remained, a terribly scarred, heart-broken half-Skaa rediscovered it in the depths of the Lord Ruler\'s most hellish prison. Kelsier "snapped" and found in himself the powers of a Mistborn. A brilliant thief and natural leader, he turned his talents to the ultimate caper, with the Lord Ruler himself as the mark. Kelsier recruited the underworld\'s elite, the smartest and most trustworthy allomancers, each of whom shares one of his many powers, and all of whom relish a high-stakes challenge. Only then does he reveal his ultimate dream, not just the greatest heist in history, but the downfall of the divine despot. But even with the best criminal crew ever assembled, Kel\'s plan looks more like the ultimate long shot, until luck brings a ragged girl named Vin into his life.',
+        'For a thousand years the ash fell and no flowers bloomed. For a thousand years the Skaa slaved in misery and lived in fear. For a thousand years the Lord Ruler, the "Sliver of Infinity," reigned with absolute power and ultimate terror, divinely invincible. Then, when hope was so long lost that not even its memory remained, a terribly scarred, heart-broken half-Skaa rediscovered it in the depths of the Lord Ruler\'s most hellish prison. Kelsier "snapped" and found in himself the powers of a Mistborn. A brilliant thief and natural leader, he turned his talents to the ultimate caper, with the Lord Ruler himself as the mark.',
       image:
         "https://m.media-amazon.com/images/I/91MtImlhRSL._AC_UY654_FMwebp_QL65_.jpg",
       dateAdded: "2020-10-19",
@@ -68,8 +68,20 @@ const BookShelf = (props) => {
     console.log(element);
     if (element.className === "hide-this") {
       element.className = "show-this";
+      setTimeout(() => {
+        window.scroll({
+          top: 1000,
+          behavior: "smooth",
+        });
+      }, 1000);
     } else {
       element.className = "hide-this";
+      setTimeout(() => {
+        window.scroll({
+          top: 1000,
+          behavior: "smooth",
+        });
+      }, 1000);
     }
   };
 

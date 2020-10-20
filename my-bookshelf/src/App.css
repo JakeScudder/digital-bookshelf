@@ -1,15 +1,23 @@
+.App {
+  overflow: hidden;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 .book-list {
   display: flex;
 }
 
 .book-cover {
-  width: 440px;
-  height: 650px;
+  width: 370px;
+  height: 550px;
 }
 
 .show-this {
-  height: 875px;
-  transition: height 2s ease;
+  height: 750px;
+  transition: height 1.5s ease;
   overflow: hidden;
 }
 
