@@ -18,7 +18,7 @@ const NavBar = (props) => {
 
   return (
     <div>
-      <Navbar dark="true" expand="sm" className="bg-primary mb-5">
+      <Navbar dark expand="sm" className="bg-primary">
         <Container>
           <NavbarBrand href="/">My Bookshelf</NavbarBrand>
           <NavbarToggler onClick={toggle} />

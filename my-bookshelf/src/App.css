@@ -15,7 +15,11 @@ html {
   height: 550px;
 }
 
-.show-this {
+.list-group {
+  overflow-y: auto;
+}
+
+/* .show-this {
   height: 750px;
   transition: height 1.5s ease;
   overflow: hidden;
@@ -26,4 +30,15 @@ html {
   transition: height 1s ease;
   opacity: 0;
   height: 0;
+} */
+
+@media screen and (max-width: 1441px) {
+  .book-cover {
+    width: 335px;
+    height: 500px;
+  }
+
+  .bg-primary {
+    margin-bottom: 1rem;
+  }
 }

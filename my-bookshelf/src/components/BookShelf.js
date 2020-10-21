@@ -1,14 +1,9 @@
 import React, { useState } from "react";
-import {
-  Container,
-  ListGroup,
-  ListGroupItem,
-  Button,
-  Card,
-  CardBody,
-} from "reactstrap";
+import { Container, ListGroup, ListGroupItem, Button } from "reactstrap";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { v4 as uuidv4 } from "uuid";
+
+import GenericModal from "./GenericModal";
 
 const BookShelf = (props) => {
   const [books, setBooks] = useState([
@@ -61,29 +56,35 @@ const BookShelf = (props) => {
     },
   ]);
 
-  // Function shows book details based on id
-  const showDetails = (id) => {
-    console.log(id);
-    let element = document.getElementById(id);
-    console.log(element);
-    if (element.className === "hide-this") {
-      element.className = "show-this";
-      setTimeout(() => {
-        window.scroll({
-          top: 1000,
-          behavior: "smooth",
-        });
-      }, 1000);
-    } else {
-      element.className = "hide-this";
-      setTimeout(() => {
-        window.scroll({
-          top: 1000,
-          behavior: "smooth",
-        });
-      }, 1000);
-    }
-  };
+  // // Function shows book details based on id
+  // const showDetails = (id) => {
+  //   console.log(id);
+  //   let element = document.getElementById(id);
+  //   console.log(element);
+  //   if (element.className === "hide-this") {
+  //     element.className = "show-this";
+  //     //Auto-Scrolling Behavior
+  //     setTimeout(() => {
+  //       window.scroll({
+  //         top: 1200,
+  //         behavior: "smooth",
+  //       });
+  //     }, 1000);
+  //   } else {
+  //     element.className = "hide-this";
+  //     //Auto-Scrolling Behavior
+  //     setTimeout(() => {
+  //       window.scroll({
+  //         top: 1200,
+  //         behavior: "smooth",
+  //       });
+  //     }, 1000);
+  //   }
+  // };
+
+  const [modal, setModal] = useState(false);
+
+  const toggle = () => setModal(!modal);
 
   return (
     <div>
@@ -91,7 +92,7 @@ const BookShelf = (props) => {
         <Button
           dark="true"
           className="bg-primary"
-          style={{ marginBottom: "2rem" }}
+          style={{ marginBottom: ".5rem" }}
           onClick={() => {
             const title = prompt("Add Book Title");
             if (title) {
@@ -123,30 +124,22 @@ const BookShelf = (props) => {
                       alt="Book Cover"
                     ></img>
                     {/* Button passes the id of the collapse element to the handleClick function with an anonymous function */}
-                    <Button
-                      color="primary"
-                      onClick={() => showDetails(id)}
-                      style={{ marginBottom: "1rem" }}
-                    >
-                      Show Description
+                    <Button color="danger" onClick={toggle}>
+                      More Details
                     </Button>
-                    <div id={id} className="hide-this">
-                      <Card>
-                        <CardBody>
-                          <h1 className="title">{title}</h1>
-                          <h2 className="subtitle">{subtitle}</h2>
-                          <h4 className="author">{author}</h4>
-                          <h5 className="date-published">
-                            Published on: {publishedDate}
-                          </h5>
-                          <p className="date-added">
-                            Added to Digital Bookshelf on:{dateAdded}
-                          </p>
-                          <p className="category">Category: {category}</p>
-                          <p className="description">{description}</p>
-                        </CardBody>
-                      </Card>
-                    </div>
+                    <GenericModal
+                      id={id}
+                      title={title}
+                      subtitle={subtitle}
+                      author={author}
+                      publishedDate={publishedDate}
+                      description={description}
+                      image={image}
+                      dateAdded={dateAdded}
+                      category={category}
+                      isOpen={modal}
+                      toggle={toggle}
+                    />
                   </ListGroupItem>
                 </CSSTransition>
               )
