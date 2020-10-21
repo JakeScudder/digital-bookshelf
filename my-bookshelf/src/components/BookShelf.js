@@ -56,36 +56,6 @@ const BookShelf = (props) => {
     },
   ]);
 
-  // // Function shows book details based on id
-  // const showDetails = (id) => {
-  //   console.log(id);
-  //   let element = document.getElementById(id);
-  //   console.log(element);
-  //   if (element.className === "hide-this") {
-  //     element.className = "show-this";
-  //     //Auto-Scrolling Behavior
-  //     setTimeout(() => {
-  //       window.scroll({
-  //         top: 1200,
-  //         behavior: "smooth",
-  //       });
-  //     }, 1000);
-  //   } else {
-  //     element.className = "hide-this";
-  //     //Auto-Scrolling Behavior
-  //     setTimeout(() => {
-  //       window.scroll({
-  //         top: 1200,
-  //         behavior: "smooth",
-  //       });
-  //     }, 1000);
-  //   }
-  // };
-
-  const [modal, setModal] = useState(false);
-
-  const toggle = () => setModal(!modal);
-
   return (
     <div>
       <Container>
@@ -123,10 +93,7 @@ const BookShelf = (props) => {
                       src={image}
                       alt="Book Cover"
                     ></img>
-                    {/* Button passes the id of the collapse element to the handleClick function with an anonymous function */}
-                    <Button color="danger" onClick={toggle}>
-                      More Details
-                    </Button>
+
                     <GenericModal
                       id={id}
                       title={title}
@@ -137,8 +104,6 @@ const BookShelf = (props) => {
                       image={image}
                       dateAdded={dateAdded}
                       category={category}
-                      isOpen={modal}
-                      toggle={toggle}
                     />
                   </ListGroupItem>
                 </CSSTransition>

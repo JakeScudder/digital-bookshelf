@@ -3,10 +3,7 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 
 const GenericModal = (props) => {
   const {
-    buttonLabel,
     className,
-    isOpen,
-    toggle,
     id,
     title,
     subtitle,
@@ -17,16 +14,16 @@ const GenericModal = (props) => {
     category,
   } = props;
 
-  // const [modal, setModal] = useState(false);
+  const [modal, setModal] = useState(false);
 
-  // const toggle = () => setModal(!modal);
+  const toggle = () => setModal(!modal);
 
   return (
     <div>
       <Button color="danger" onClick={toggle}>
-        {buttonLabel}
+        More Details
       </Button>
-      <Modal id={id} isOpen={isOpen} toggle={toggle} className={className}>
+      <Modal id={id} isOpen={modal} toggle={toggle} className={className}>
         <ModalHeader toggle={toggle}>Modal title</ModalHeader>
         <ModalBody>
           <h1 className="title">{title}</h1>
