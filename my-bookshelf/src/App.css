@@ -11,33 +11,32 @@ html {
 }
 
 .book-cover {
+  height: 87%;
   width: 370px;
-  height: 550px;
 }
 
 .list-group {
   overflow-y: auto;
 }
 
-/* .show-this {
-  height: 750px;
-  transition: height 1.5s ease;
-  overflow: hidden;
+/******* Modal*/
+.subtitle {
+  margin-top: -0.5rem;
+  margin-bottom: 1rem;
 }
 
-.hide-this {
-  display: block;
-  transition: height 1s ease;
-  opacity: 0;
-  height: 0;
-} */
+/******* Buttons*/
+
+.more-details-btn {
+  margin-top: 0.5rem;
+}
+
+.remove-btn {
+  float: right;
+  margin-top: -40px;
+}
 
 @media screen and (max-width: 1441px) {
-  .book-cover {
-    width: 335px;
-    height: 500px;
-  }
-
   .bg-primary {
     margin-bottom: 1rem;
   }

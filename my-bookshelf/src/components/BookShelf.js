@@ -105,6 +105,21 @@ const BookShelf = (props) => {
                       dateAdded={dateAdded}
                       category={category}
                     />
+                    <Button
+                      className="remove-btn"
+                      color="primary"
+                      size="md"
+                      onClick={() => {
+                        const confirmation = prompt("Please type 'Delete'");
+                        if (confirmation === "Delete") {
+                          setBooks((books) =>
+                            books.filter((book) => book.id !== id)
+                          );
+                        }
+                      }}
+                    >
+                      &times;
+                    </Button>
                   </ListGroupItem>
                 </CSSTransition>
               )

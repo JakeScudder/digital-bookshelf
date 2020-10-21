@@ -20,7 +20,7 @@ const GenericModal = (props) => {
 
   return (
     <div>
-      <Button color="danger" onClick={toggle}>
+      <Button className="more-details-btn" color="primary" onClick={toggle}>
         More Details
       </Button>
       <Modal id={id} isOpen={modal} toggle={toggle} className={className}>
@@ -28,12 +28,12 @@ const GenericModal = (props) => {
         <ModalBody>
           <h1 className="title">{title}</h1>
           <h2 className="subtitle">{subtitle}</h2>
-          <h4 className="author">{author}</h4>
+          <h4 className="author">Author: {author}</h4>
           <h5 className="date-published">Published on: {publishedDate}</h5>
-          <p className="date-added">
-            Added to Digital Bookshelf on:{dateAdded}
-          </p>
           <p className="category">Category: {category}</p>
+          <p className="date-added">
+            Added to Digital Bookshelf on: {dateAdded}
+          </p>
           <p className="description">{description}</p>
         </ModalBody>
         <ModalFooter>

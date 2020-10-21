@@ -1,0 +1,72 @@
+import React, { useState } from "react";
+import { withRouter } from "react-router";
+import Cookies from "js-cookie";
+
+import apiKey from "../apiKey";
+
+const SearchForm = (props) => {
+  //Set State
+  const [search, setSearch] = useState("");
+
+  //Handles the form submission, passes info to handleSearch props
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    let searchUrl = `/search/${search}`;
+    props.history.push(searchUrl);
+    handleSearch(search);
+    // Cookies.set("searchQuery", JSON.stringify(search));
+    setSearch("");
+  };
+
+  const handleChange = (e) => {
+    setSearch(e.target.value);
+  };
+
+  //Handles all fetch requests for: home route, navigation, and search forms
+  handleFetch = (query) => {
+    this.setState({
+      loading: true,
+    });
+    axios
+      .get(
+        `https://www.googleapis.com/books/v1/volumes?q=${query}&key=${apiKey}`
+      )
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => {
+        console.log("Error fetching and parsing data", error);
+      });
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="search-form">
+      <div className="searchDiv">
+        <input
+          type="search"
+          name="search"
+          placeholder="Search"
+          value={search}
+          onChange={handleChange}
+        />
+      </div>
+      <div className="searchDiv">
+        <button type="submit" className="search-button">
+          <svg
+            fill="#fff"
+            height="24"
+            viewBox="0 0 23 23"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
+            <path d="M0 0h24v24H0z" fill="none" />
+          </svg>
+        </button>
+      </div>
+    </form>
+  );
+};
+
+const SearchFormWithRouter = withRouter(SearchForm);
+export default SearchFormWithRouter;
