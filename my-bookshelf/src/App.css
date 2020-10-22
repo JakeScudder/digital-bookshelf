@@ -19,6 +19,37 @@ html {
   overflow-y: auto;
 }
 
+/******* Search Component*/
+.search-bar-container {
+  width: 85%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.search-form {
+  display: flex;
+  flex-direction: row;
+}
+
+.search-input {
+  border-radius: 5px;
+}
+
+.search-button {
+  border-radius: 5px;
+}
+
+.search-bar-input {
+  margin-right: 0.3rem;
+}
+
+.results-jumbo {
+  margin-top: 1rem;
+  width: 85%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 /******* Modal*/
 .subtitle {
   margin-top: -0.5rem;
