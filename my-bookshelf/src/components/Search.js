@@ -46,7 +46,11 @@ const SearchForm = (props) => {
       });
   };
 
-  const addBook = (id) => {};
+  //This will eventually send the book to be added to the redux state
+  const addBook = (index) => {
+    console.log(index);
+    console.log(results[index]);
+  };
 
   return (
     <div className="search-container">
@@ -82,17 +86,20 @@ const SearchForm = (props) => {
         <div>
           {results.length > 0
             ? results.map(
-                ({
-                  id,
-                  title,
-                  subtitle,
-                  authors,
-                  publishedDate,
-                  description,
-                  imageLinks,
-                  category,
-                  industryIdentifiers,
-                }) => (
+                (
+                  {
+                    id,
+                    title,
+                    subtitle,
+                    authors,
+                    publishedDate,
+                    description,
+                    imageLinks,
+                    category,
+                    industryIdentifiers,
+                  },
+                  index
+                ) => (
                   <Jumbotron className="results-jumbo" key={id}>
                     <img src={imageLinks.thumbnail} alt="book-thumbnail"></img>
                     <h3 className="result-title">{title}</h3>
@@ -104,7 +111,7 @@ const SearchForm = (props) => {
                     </h3>
                     <p className="lead">
                       <Button
-                        onClick={() => addBook(id)}
+                        onClick={() => addBook(index)}
                         className="add-book"
                         color="primary"
                       >
