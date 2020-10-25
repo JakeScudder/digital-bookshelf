@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import { withRouter } from "react-router";
-import { Jumbotron, Button } from "reactstrap";
+import { Link } from "react-router-dom";
+import { Jumbotron } from "reactstrap";
 
 import axios from "axios";
-
 import apiKey from "../apiKey";
+
+//Redux
+import { connect } from "react-redux";
+import { addBook } from "../actions/bookActions";
 
 const SearchForm = (props) => {
   //Set State
@@ -22,6 +26,7 @@ const SearchForm = (props) => {
     setSearch("");
   };
 
+  //Handles user input
   const handleChange = (e) => {
     setSearch(e.target.value);
   };
@@ -46,10 +51,12 @@ const SearchForm = (props) => {
       });
   };
 
-  //This will eventually send the book to be added to the redux state
-  const addBook = (index) => {
-    console.log(index);
-    console.log(results[index]);
+  //Sends Book data to redux state
+  const handleAddBook = (index) => {
+    console.log("AddBook function");
+    let data = results[index];
+    console.log(data);
+    props.addBook(data);
   };
 
   return (
@@ -110,13 +117,19 @@ const SearchForm = (props) => {
                       {industryIdentifiers[1].identifier}
                     </h3>
                     <p className="lead">
-                      <Button
-                        onClick={() => addBook(index)}
+                      {/* <Button
+                        onClick={() => handleAddBook(index)}
                         className="add-book"
                         color="primary"
+                      >Add to Bookshelf</Button> */}
+                      <Link
+                        onClick={() => handleAddBook(index)}
+                        className="add-book"
+                        color="primary"
+                        to="/"
                       >
                         Add to Bookshelf
-                      </Button>
+                      </Link>
                     </p>
                   </Jumbotron>
                 )
@@ -129,4 +142,18 @@ const SearchForm = (props) => {
 };
 
 const SearchFormWithRouter = withRouter(SearchForm);
-export default SearchFormWithRouter;
+
+const mapStateToProps = (state) => ({
+  books: state.book.bookData,
+});
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addBook: (data) => dispatch(addBook(data)),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SearchFormWithRouter);

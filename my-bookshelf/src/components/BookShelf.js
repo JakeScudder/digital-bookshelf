@@ -1,65 +1,31 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { Container, ListGroup, ListGroupItem, Button } from "reactstrap";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
-import { v4 as uuidv4 } from "uuid";
 
 import GenericModal from "./GenericModal";
 
+//Redux
+import { connect } from "react-redux";
+import { getBooks, deleteBook } from "../actions/bookActions";
+
 const BookShelf = (props) => {
-  const [books, setBooks] = useState([
-    {
-      id: uuidv4(),
-      title: "Mistborn",
-      subtitle: "The Final empire",
-      author: "Brandon Sanderson",
-      publishedDate: "2010-04-01",
-      description:
-        'For a thousand years the ash fell and no flowers bloomed. For a thousand years the Skaa slaved in misery and lived in fear. For a thousand years the Lord Ruler, the "Sliver of Infinity," reigned with absolute power and ultimate terror, divinely invincible. Then, when hope was so long lost that not even its memory remained, a terribly scarred, heart-broken half-Skaa rediscovered it in the depths of the Lord Ruler\'s most hellish prison. Kelsier "snapped" and found in himself the powers of a Mistborn. A brilliant thief and natural leader, he turned his talents to the ultimate caper, with the Lord Ruler himself as the mark.',
-      image:
-        "https://m.media-amazon.com/images/I/91MtImlhRSL._AC_UY654_FMwebp_QL65_.jpg",
-      dateAdded: "2020-10-19",
-      category: "fantasy",
-    },
-    {
-      id: uuidv4(),
-      title: "Warbreaker",
-      author: "Brandon Sanderson",
-      publishedDate: "2010-04-01",
-      description: "Test 2",
-      image:
-        "https://m.media-amazon.com/images/I/51yNKw2vXSL._AC_UY436_FMwebp_QL65_.jpg",
-      dateAdded: "2020-10-19",
-      category: "fantasy",
-    },
-    {
-      id: uuidv4(),
-      title: "Elantris",
-      author: "Brandon Sanderson",
-      publishedDate: "2010-04-01",
-      description: "Test 3",
-      image:
-        "https://m.media-amazon.com/images/I/91wTP3k8ZtL._AC_UY654_FMwebp_QL65_.jpg",
-      dateAdded: "2020-10-19",
-      category: "fantasy",
-    },
-    {
-      id: uuidv4(),
-      title: "OathBringer",
-      subtitle: "The Final empire",
-      author: "Brandon Sanderson",
-      publishedDate: "2010-04-01",
-      description: "Kelsier is cool",
-      image:
-        "https://m.media-amazon.com/images/I/91x4fchgt2L._AC_UY654_FMwebp_QL65_.jpg",
-      dateAdded: "2020-10-19",
-      category: "fantasy",
-    },
-  ]);
+  useEffect(() => {
+    props.getBooks();
+    console.log("BookShelf Component:", props.books);
+  });
+
+  const handleDelete = (id) => {
+    console.log(id);
+    const confirmation = prompt("Please type 'Delete'");
+    if (confirmation === "Delete") {
+      props.deleteBook(id);
+    }
+  };
 
   return (
     <div>
       <Container>
-        <Button
+        {/* <Button
           dark="true"
           className="bg-primary"
           style={{ marginBottom: ".5rem" }}
@@ -71,10 +37,10 @@ const BookShelf = (props) => {
           }}
         >
           Add Book
-        </Button>
+        </Button> */}
         <ListGroup>
           <TransitionGroup className="book-list">
-            {books.map(
+            {props.books.map(
               ({
                 id,
                 title,
@@ -109,14 +75,7 @@ const BookShelf = (props) => {
                       className="remove-btn"
                       color="primary"
                       size="md"
-                      onClick={() => {
-                        const confirmation = prompt("Please type 'Delete'");
-                        if (confirmation === "Delete") {
-                          setBooks((books) =>
-                            books.filter((book) => book.id !== id)
-                          );
-                        }
-                      }}
+                      onClick={() => handleDelete(id)}
                     >
                       &times;
                     </Button>
@@ -131,4 +90,15 @@ const BookShelf = (props) => {
   );
 };
 
-export default BookShelf;
+const mapStateToProps = (state) => ({
+  books: state.book.bookData,
+});
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getBooks: () => dispatch(getBooks),
+    deleteBook: (id) => dispatch(deleteBook(id)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(BookShelf);
