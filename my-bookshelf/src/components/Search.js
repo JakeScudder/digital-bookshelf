@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { withRouter } from "react-router";
 import { Link } from "react-router-dom";
-import { Jumbotron } from "reactstrap";
+import { Jumbotron, Button } from "reactstrap";
 
 import axios from "axios";
 import apiKey from "../apiKey";
@@ -38,10 +38,8 @@ const SearchForm = (props) => {
         `https://www.googleapis.com/books/v1/volumes?q=${query}&key=${apiKey}`
       )
       .then((res) => {
-        console.log(res.data.items);
         let apiResults = res.data.items;
         for (let i = 0; i < 5; i++) {
-          console.log(apiResults[i].volumeInfo);
           let data = apiResults[i].volumeInfo;
           setResults((results) => results.concat(data));
         }
@@ -51,12 +49,22 @@ const SearchForm = (props) => {
       });
   };
 
-  //Sends Book data to redux state
+  //Sends formatted book data to redux state
   const handleAddBook = (index) => {
     console.log("AddBook function");
     let data = results[index];
-    console.log(data);
-    props.addBook(data);
+    let formattedData = {};
+    formattedData.title = data.title;
+    formattedData.subtitle = data.subtitle;
+    formattedData.author = data.authors[0];
+    formattedData.publishedDate = data.publishedDate;
+    formattedData.description = data.description;
+    //Temporary has lower res image
+    // TODO: fetch better quality image here or in api
+    formattedData.image = data.imageLinks.thumbnail;
+    //TODO: category
+    console.log("formattedData:", formattedData);
+    props.addBook(formattedData);
   };
 
   return (
@@ -95,7 +103,7 @@ const SearchForm = (props) => {
             ? results.map(
                 (
                   {
-                    id,
+                    _id,
                     title,
                     subtitle,
                     authors,
@@ -107,7 +115,7 @@ const SearchForm = (props) => {
                   },
                   index
                 ) => (
-                  <Jumbotron className="results-jumbo" key={id}>
+                  <Jumbotron className="results-jumbo" key={_id}>
                     <img src={imageLinks.thumbnail} alt="book-thumbnail"></img>
                     <h3 className="result-title">{title}</h3>
                     <h3 className="result-author">{authors[0]}</h3>
@@ -121,7 +129,9 @@ const SearchForm = (props) => {
                         onClick={() => handleAddBook(index)}
                         className="add-book"
                         color="primary"
-                      >Add to Bookshelf</Button> */}
+                      >
+                        Add to Bookshelf
+                      </Button> */}
                       <Link
                         onClick={() => handleAddBook(index)}
                         className="add-book"

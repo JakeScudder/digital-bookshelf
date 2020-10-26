@@ -5,14 +5,15 @@ import { CSSTransition, TransitionGroup } from "react-transition-group";
 import GenericModal from "./GenericModal";
 
 //Redux
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import { getBooks, deleteBook } from "../actions/bookActions";
 
 const BookShelf = (props) => {
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    props.getBooks();
-    console.log("BookShelf Component:", props.books);
-  });
+    dispatch(getBooks());
+  }, [dispatch]);
 
   const handleDelete = (id) => {
     console.log(id);
@@ -42,7 +43,7 @@ const BookShelf = (props) => {
           <TransitionGroup className="book-list">
             {props.books.map(
               ({
-                id,
+                _id,
                 title,
                 subtitle,
                 author,
@@ -52,7 +53,7 @@ const BookShelf = (props) => {
                 dateAdded,
                 category,
               }) => (
-                <CSSTransition key={id} timeout={600} classNames="fade">
+                <CSSTransition key={_id} timeout={600} classNames="fade">
                   <ListGroupItem>
                     <img
                       className="book-cover"
@@ -61,7 +62,7 @@ const BookShelf = (props) => {
                     ></img>
 
                     <GenericModal
-                      id={id}
+                      id={_id}
                       title={title}
                       subtitle={subtitle}
                       author={author}
@@ -75,7 +76,7 @@ const BookShelf = (props) => {
                       className="remove-btn"
                       color="primary"
                       size="md"
-                      onClick={() => handleDelete(id)}
+                      onClick={() => handleDelete(_id)}
                     >
                       &times;
                     </Button>
