@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const path = require("path");
 
 const books = require("./routes/api/books");
 
@@ -20,6 +21,18 @@ mongoose
 
 //Use Routes
 app.use("/api/books", books);
+
+// Serve static assets if in production
+if (process.env.NODE_ENV === "production") {
+  //Set static folder
+  app.use(express.static("my-bookshelf/build"));
+
+  app.get("*", (req, res) => {
+    res.sendFile(
+      path.resolve(__dirname, "my-bookshelf", "build", "index.html")
+    );
+  });
+}
 
 const port = process.env.PORT || 7000;
 
