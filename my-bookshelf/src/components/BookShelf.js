@@ -1,5 +1,11 @@
 import React, { useEffect } from "react";
-import { Container, ListGroup, ListGroupItem, Spinner } from "reactstrap";
+import {
+  Container,
+  ListGroup,
+  ListGroupItem,
+  Spinner,
+  Button,
+} from "reactstrap";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { Link } from "react-router-dom";
 
@@ -27,7 +33,7 @@ const BookShelf = (props) => {
 
   return (
     <div>
-      <Container>
+      <Container className="bookshelf-container">
         {/* <Button
           dark="true"
           className="bg-primary"
@@ -84,15 +90,15 @@ const BookShelf = (props) => {
                       dateAdded={dateAdded}
                       category={category}
                     />
-                    <Link
+                    <Button
                       className="remove-btn"
                       color="primary"
                       size="md"
                       onClick={() => handleDelete(_id)}
-                      to="/"
                     >
                       &times;
-                    </Link>
+                      <Link to="/"></Link>
+                    </Button>
                   </ListGroupItem>
                 </CSSTransition>
               )
