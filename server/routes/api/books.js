@@ -1,6 +1,9 @@
 const express = require("express");
 const router = express.Router();
 
+//Cover images
+const bookcovers = require("bookcovers");
+
 // Book model
 const Book = require("../../models/Book");
 
@@ -9,7 +12,7 @@ const Book = require("../../models/Book");
 // @access Public
 router.get("/", (req, res) => {
   Book.find()
-    .sort({ date: -1 })
+    .sort({ date: 1 })
     .then((books) => res.json(books));
 });
 
@@ -17,17 +20,66 @@ router.get("/", (req, res) => {
 // @desc Add a Book
 // @access Public
 router.post("/", (req, res) => {
-  const newBook = new Book({
-    title: req.body.title,
-    subtitle: req.body.subtitle,
-    author: req.body.author,
-    publishedDate: req.body.publishedDate,
-    description: req.body.description,
-    image: req.body.image,
-    category: req.body.category,
+  console.log("server", req.body);
+  let maxImage;
+  //Fetches higher quality image
+  bookcovers.withIsbn(req.body.isbn).then((res) => {
+    if (res.amazon["3x"]) {
+      maxImage = res.amazon["3x"];
+    } else if (res.amazon["2.5x"]) {
+      maxImage = res.amazon["2.5x"];
+    } else if (res.amazon["2x"]) {
+      maxImage = res.amazon["2x"];
+    }
+    console.log("maxImage", maxImage);
   });
 
-  newBook.save().then((book) => res.json(book));
+  //Once max-image is found, add entire book to database
+  let checkExist = setInterval(() => {
+    if (maxImage) {
+      console.log("exists");
+      clearInterval(checkExist);
+      const newBook = new Book({
+        title: req.body.title,
+        subtitle: req.body.subtitle,
+        author: req.body.author,
+        publishedDate: req.body.publishedDate,
+        description: req.body.description,
+        image: maxImage,
+        category: req.body.category,
+      });
+
+      newBook.save().then((book) => res.json(book));
+    }
+  }, 1000);
+
+  //*****Second Iteration
+  // setTimeout(() => {
+  //   const newBook = new Book({
+  //     title: req.body.title,
+  //     subtitle: req.body.subtitle,
+  //     author: req.body.author,
+  //     publishedDate: req.body.publishedDate,
+  //     description: req.body.description,
+  //     image: maxImage,
+  //     category: req.body.category,
+  //   });
+
+  //   newBook.save().then((book) => res.json(book));
+  // }, 15000);
+
+  //*****First iteration
+  // const newBook = new Book({
+  //   title: req.body.title,
+  //   subtitle: req.body.subtitle,
+  //   author: req.body.author,
+  //   publishedDate: req.body.publishedDate,
+  //   description: req.body.description,
+  //   image: maxImage,
+  //   category: req.body.category,
+  // });
+
+  // newBook.save().then((book) => res.json(book));
 });
 
 // @route DELETE api/books/:id

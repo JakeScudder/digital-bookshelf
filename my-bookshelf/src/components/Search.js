@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { withRouter } from "react-router";
 import { Link } from "react-router-dom";
-import { Jumbotron, Button } from "reactstrap";
+import { Jumbotron } from "reactstrap";
 
 import axios from "axios";
 import apiKey from "../apiKey";
@@ -53,12 +53,14 @@ const SearchForm = (props) => {
   const handleAddBook = (index) => {
     console.log("AddBook function");
     let data = results[index];
+    console.log(data);
     let formattedData = {};
     formattedData.title = data.title;
     formattedData.subtitle = data.subtitle;
     formattedData.author = data.authors[0];
     formattedData.publishedDate = data.publishedDate;
     formattedData.description = data.description;
+    formattedData.isbn = data.industryIdentifiers[1].identifier;
     //Temporary has lower res image
     // TODO: fetch better quality image here or in api
     formattedData.image = data.imageLinks.thumbnail;
@@ -103,7 +105,7 @@ const SearchForm = (props) => {
             ? results.map(
                 (
                   {
-                    _id,
+                    id,
                     title,
                     subtitle,
                     authors,
@@ -115,7 +117,7 @@ const SearchForm = (props) => {
                   },
                   index
                 ) => (
-                  <Jumbotron className="results-jumbo" key={_id}>
+                  <Jumbotron className="results-jumbo" key={index}>
                     <img src={imageLinks.thumbnail} alt="book-thumbnail"></img>
                     <h3 className="result-title">{title}</h3>
                     <h3 className="result-author">{authors[0]}</h3>

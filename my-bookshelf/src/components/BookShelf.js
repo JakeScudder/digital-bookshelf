@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
-import { Container, ListGroup, ListGroupItem, Button } from "reactstrap";
+import { Container, ListGroup, ListGroupItem, Spinner } from "reactstrap";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
+import { Link } from "react-router-dom";
 
 import GenericModal from "./GenericModal";
 
@@ -21,6 +22,7 @@ const BookShelf = (props) => {
     if (confirmation === "Delete") {
       props.deleteBook(id);
     }
+    window.location.reload();
   };
 
   return (
@@ -39,6 +41,7 @@ const BookShelf = (props) => {
         >
           Add Book
         </Button> */}
+        {props.loading ? <Spinner color="primary" /> : null}
         <ListGroup>
           <TransitionGroup className="book-list">
             {props.books.map(
@@ -72,14 +75,15 @@ const BookShelf = (props) => {
                       dateAdded={dateAdded}
                       category={category}
                     />
-                    <Button
+                    <Link
                       className="remove-btn"
                       color="primary"
                       size="md"
                       onClick={() => handleDelete(_id)}
+                      to="/"
                     >
                       &times;
-                    </Button>
+                    </Link>
                   </ListGroupItem>
                 </CSSTransition>
               )
@@ -93,6 +97,7 @@ const BookShelf = (props) => {
 
 const mapStateToProps = (state) => ({
   books: state.book.bookData,
+  loading: state.book.loading,
 });
 
 const mapDispatchToProps = (dispatch) => {

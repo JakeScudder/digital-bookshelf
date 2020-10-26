@@ -22,6 +22,7 @@ export default function (state = initialState, action) {
       return {
         ...state,
         bookData: state.bookData.filter((book) => book.id !== action.payload),
+        loading: false,
       };
     case ADD_BOOK:
       return {

@@ -14,7 +14,7 @@ export const getBooks = () => (dispatch) => {
 
 export const addBook = (data) => (dispatch) => {
   console.log("addBook redux action");
-  console.log(data);
+  // console.log(data);
   dispatch(setBooksLoading());
   axios
     .post("/api/books", data)
@@ -31,9 +31,14 @@ export const addBook = (data) => (dispatch) => {
 };
 
 export const deleteBook = (id) => (dispatch) => {
-  dispatch({
-    type: DELETE_BOOK,
-    payload: id,
+  console.log("deleteBook redux Function");
+  // console.log("id:", id);
+  dispatch(setBooksLoading());
+  axios.delete(`/api/books/${id}`).then((res) => {
+    dispatch({
+      type: DELETE_BOOK,
+      payload: res.id,
+    });
   });
 };
 
