@@ -41,6 +41,7 @@ const SearchForm = (props) => {
         let apiResults = res.data.items;
         for (let i = 0; i < 5; i++) {
           let data = apiResults[i].volumeInfo;
+          console.log(data);
           setResults((results) => results.concat(data));
         }
       })
@@ -112,20 +113,21 @@ const SearchForm = (props) => {
                     publishedDate,
                     description,
                     imageLinks,
-                    category,
-                    industryIdentifiers,
                   },
                   index
                 ) => (
                   <Jumbotron className="results-jumbo" key={index}>
-                    <img src={imageLinks.thumbnail} alt="book-thumbnail"></img>
+                    {imageLinks ? (
+                      <img
+                        src={imageLinks.thumbnail}
+                        alt="book-thumbnail"
+                      ></img>
+                    ) : null}
                     <h3 className="result-title">{title}</h3>
+                    <h3 className="result-subtitle">{subtitle}</h3>
                     <h3 className="result-author">{authors[0]}</h3>
                     <h3 className="result-published-date">{publishedDate}</h3>
                     <p className="result-description">{description}</p>
-                    <h3 className="result-isbn" style={{ display: "none" }}>
-                      {industryIdentifiers[1].identifier}
-                    </h3>
                     <p className="lead">
                       {/* <Button
                         onClick={() => handleAddBook(index)}

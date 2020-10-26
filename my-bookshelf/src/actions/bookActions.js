@@ -1,5 +1,11 @@
 import axios from "axios";
-import { GET_BOOKS, ADD_BOOK, DELETE_BOOK, BOOKS_LOADING } from "./types";
+import {
+  GET_BOOKS,
+  ADD_BOOK,
+  DELETE_BOOK,
+  BOOKS_LOADING,
+  ADD_BOOK_LOADING,
+} from "./types";
 
 export const getBooks = () => (dispatch) => {
   console.log("getBook action");
@@ -15,7 +21,7 @@ export const getBooks = () => (dispatch) => {
 export const addBook = (data) => (dispatch) => {
   console.log("addBook redux action");
   // console.log(data);
-  dispatch(setBooksLoading());
+  dispatch(addBookLoading());
   axios
     .post("/api/books", data)
     .then((res) => {
@@ -26,7 +32,7 @@ export const addBook = (data) => (dispatch) => {
       });
     })
     .catch((err) => {
-      console.log("addBook action error");
+      console.log("addBook action error:", err);
     });
 };
 
@@ -45,5 +51,11 @@ export const deleteBook = (id) => (dispatch) => {
 export const setBooksLoading = () => {
   return {
     type: BOOKS_LOADING,
+  };
+};
+
+export const addBookLoading = () => {
+  return {
+    type: ADD_BOOK_LOADING,
   };
 };

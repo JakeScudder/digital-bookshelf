@@ -42,6 +42,15 @@ const BookShelf = (props) => {
           Add Book
         </Button> */}
         {props.loading ? <Spinner color="primary" /> : null}
+        {props.addBookLoading ? (
+          <div id="add-book-loading-spinner">
+            <Spinner color="primary"></Spinner>
+            <h4>
+              Adding Book Now: Please wait while we retrieve a high quality
+              image...
+            </h4>
+          </div>
+        ) : null}
         <ListGroup>
           <TransitionGroup className="book-list">
             {props.books.map(
@@ -98,6 +107,7 @@ const BookShelf = (props) => {
 const mapStateToProps = (state) => ({
   books: state.book.bookData,
   loading: state.book.loading,
+  addBookLoading: state.book.addBookLoading,
 });
 
 const mapDispatchToProps = (dispatch) => {

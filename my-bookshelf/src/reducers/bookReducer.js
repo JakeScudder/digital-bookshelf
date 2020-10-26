@@ -3,11 +3,13 @@ import {
   DELETE_BOOK,
   ADD_BOOK,
   BOOKS_LOADING,
+  ADD_BOOK_LOADING,
 } from "../actions/types";
 
 const initialState = {
   bookData: [],
   loading: false,
+  addBookLoading: false,
 };
 
 export default function (state = initialState, action) {
@@ -28,13 +30,19 @@ export default function (state = initialState, action) {
       return {
         ...state,
         bookData: [...state.bookData, action.payload],
-        loading: false,
+        addBookLoading: false,
       };
 
     case BOOKS_LOADING:
       return {
         ...state,
         loading: true,
+      };
+
+    case ADD_BOOK_LOADING:
+      return {
+        ...state,
+        addBookLoading: true,
       };
     default:
       return state;

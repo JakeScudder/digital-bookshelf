@@ -12,7 +12,7 @@ const Book = require("../../models/Book");
 // @access Public
 router.get("/", (req, res) => {
   Book.find()
-    .sort({ date: 1 })
+    .sort({ date: -1 })
     .then((books) => res.json(books));
 });
 
