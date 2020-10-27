@@ -4,6 +4,9 @@ const router = express.Router();
 //Cover images
 const bookcovers = require("bookcovers");
 
+//Debugging chrome error
+puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']});
+
 // Book model
 const Book = require("../../models/Book");
 
