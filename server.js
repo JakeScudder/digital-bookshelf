@@ -49,7 +49,7 @@ if (process.env.NODE_ENV === "production") {
   //Set static folder
   app.use(express.static("my-bookshelf/build"));
 
-  app.get("/", (req, res) => {
+  app.get("*", (req, res) => {
     console.log("we are in app.get(/)");
     res.sendFile(
       path.resolve(__dirname, "my-bookshelf", "build", "index.html")
