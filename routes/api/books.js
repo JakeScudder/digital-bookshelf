@@ -13,7 +13,10 @@ const Book = require("../../models/Book");
 router.get("/", (req, res) => {
   Book.find()
     .sort({ date: -1 })
-    .then((books) => res.json(books));
+    .then((books) => res.json(books))
+    .catch((err) =>
+      res.status(404).json({ success: false }, "get route broken", err)
+    );
 });
 
 // @route POST api/books
