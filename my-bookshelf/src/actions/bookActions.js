@@ -7,14 +7,10 @@ import {
   ADD_BOOK_LOADING,
 } from "./types";
 
-const axiosInstance = axios.create({
-  baseURL: "http://localhost:5000",
-});
-
 export const getBooks = () => (dispatch) => {
   console.log("getBook action");
   dispatch(setBooksLoading());
-  axiosInstance
+  axios
     .get("/api/books")
     .then((res) => {
       console.log("books:", res.data);

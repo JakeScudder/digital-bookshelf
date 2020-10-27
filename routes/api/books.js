@@ -11,7 +11,7 @@ const Book = require("../../models/Book");
 // @desc Get All Books
 // @access Public
 router.get("/", (req, res) => {
-  console.log("books.js home route");
+  console.log("hit books.js home route");
   Book.find()
     .sort({ date: -1 })
     .then((books) => res.json(books))
