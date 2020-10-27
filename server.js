@@ -12,9 +12,11 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-// DB Config
+//HEROKU TESTING
+const dbKey = process.env.MONGODB_URI;
+
+// // DB Config
 // const db = require("./config/keys").mongoURI;
-const dbKey = process.env.MONGO_URI;
 
 // Connect to Mongo
 mongoose

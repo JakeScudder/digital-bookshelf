@@ -19,7 +19,7 @@ function App() {
         <BrowserRouter>
           <NavBar />
           <Switch>
-            <Route path="/">
+            <Route exact path="/">
               <BookShelf />
             </Route>
             <Route path="/search">
