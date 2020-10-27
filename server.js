@@ -2,12 +2,14 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const path = require("path");
+const cors = require("cors");
 
 const books = require("./routes/api/books");
 
 const app = express();
 
 // Bodyparser Middleware
+app.use(cors());
 app.use(bodyParser.json());
 
 // DB Config

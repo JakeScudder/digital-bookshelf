@@ -10,13 +10,18 @@ import {
 export const getBooks = () => (dispatch) => {
   console.log("getBook action");
   dispatch(setBooksLoading());
-  axios.get("/api/books").then((res) => {
-    console.log("books:", res.data);
-    dispatch({
-      type: GET_BOOKS,
-      payload: res.data,
+  axios
+    .get("/api/books")
+    .then((res) => {
+      console.log("books:", res.data);
+      dispatch({
+        type: GET_BOOKS,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      console.log("getBook action error:", err);
     });
-  });
 };
 
 export const addBook = (data) => (dispatch) => {
