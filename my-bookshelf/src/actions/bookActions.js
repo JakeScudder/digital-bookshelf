@@ -11,6 +11,7 @@ export const getBooks = () => (dispatch) => {
   console.log("getBook action");
   dispatch(setBooksLoading());
   axios.get("/api/books").then((res) => {
+    console.log("books:", res.data);
     dispatch({
       type: GET_BOOKS,
       payload: res.data,
