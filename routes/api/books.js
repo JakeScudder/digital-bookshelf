@@ -29,6 +29,7 @@ router.post("/", (req, res) => {
   let maxImage;
 
   //Added chrome buildpack to retrieve amazon results
+  //Added puppeteer buildpack
   //Fetches higher quality image with Promise
   const promise = new Promise((resolve, reject) => {
     bookcovers.withIsbn(req.body.isbn).then((res) => {
