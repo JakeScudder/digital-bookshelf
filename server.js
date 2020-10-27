@@ -13,7 +13,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // DB Config
-const db = require("./config/keys").mongoURI;
+const dbDev = require("./config/keys").mongoURI;
 
 //Heroku
 const dbKey = process.env.MONGODB_URI;
@@ -35,7 +35,7 @@ const dbKey = process.env.MONGODB_URI;
 
 // Connect to Mongo
 mongoose
-  .connect(dbKey, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(dbKey || dbDev, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log("MongoDB Connected"))
   .catch((err) => console.log(err));
 

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Jumbotron } from "reactstrap";
 
 import axios from "axios";
-import apiKey from "../apiKey";
+// import apiKey from "../apiKey";
 
 //Redux
 import { connect } from "react-redux";
