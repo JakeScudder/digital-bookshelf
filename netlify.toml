@@ -1,0 +1,4 @@
+[build]
+base = "myapp/"
+publish = "digital-bookshelf/build/"
+command = "npm run build"

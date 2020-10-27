@@ -15,25 +15,29 @@ app.use(bodyParser.json());
 // DB Config
 const db = require("./config/keys").mongoURI;
 
-var uristring =
-  process.env.MONGODB_URI ||
-  process.env.MONGOLAB_URI ||
-  process.env.MONGOHQ_URL ||
-  db;
+//Netlify
+const dbKey = process.env.MONGODB_URI;
 
-mongoose.connect(uristring, function (err, res) {
-  if (err) {
-    console.log("ERROR connecting to: " + uristring + ". " + err);
-  } else {
-    console.log("Succeeded connected to: " + uristring);
-  }
-});
+//Heroku Fails
+// var uristring =
+//   process.env.MONGODB_URI ||
+//   process.env.MONGOLAB_URI ||
+//   process.env.MONGOHQ_URL ||
+//   db;
 
-// // Connect to Mongo
-// mongoose
-//   .connect(uristring, { useNewUrlParser: true, useUnifiedTopology: true })
-//   .then(() => console.log("MongoDB Connected"))
-//   .catch((err) => console.log(err));
+// mongoose.connect(uristring, function (err, res) {
+//   if (err) {
+//     console.log("ERROR connecting to: " + uristring + ". " + err);
+//   } else {
+//     console.log("Succeeded connected to: " + uristring);
+//   }
+// });
+
+// Connect to Mongo
+mongoose
+  .connect(dbKey, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log("MongoDB Connected"))
+  .catch((err) => console.log(err));
 
 //Use Routes
 app.use("/api/books", books);
@@ -50,7 +54,7 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-const port = process.env.PORT || 7000;
+const port = process.env.PORT || 5000;
 
 app.listen(port, () => {
   console.log(`Server started on port ${port}`);
