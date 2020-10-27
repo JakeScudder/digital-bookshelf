@@ -24,7 +24,7 @@ router.get("/", (req, res) => {
 // @desc Add a Book
 // @access Public
 router.post("/", (req, res) => {
-  console.log("server", req.body);
+  console.log("post request body:", req.body);
   req.setTimeout(70000);
   let maxImage;
   //Fetches higher quality image
@@ -54,11 +54,6 @@ router.post("/", (req, res) => {
     newBook
       .save()
       .then((book) => res.json(book))
-      .catch((err) =>
-        res
-          .status(500)
-          .json({ success: false }, "books.js: post route broken", err)
-      );
   })
 
   //First iteration of addBook
