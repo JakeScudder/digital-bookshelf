@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 // DB Config
 const db = require("./config/keys").mongoURI;
 
-//Netlify
+//Heroku
 const dbKey = process.env.MONGODB_URI;
 
 //Heroku Fails
