@@ -2,14 +2,14 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const path = require("path");
-const cors = require("cors");
+// const cors = require("cors");
 
 const books = require("./routes/api/books");
 
 const app = express();
 
 // Bodyparser Middleware
-app.use(cors());
+// app.use(cors());
 app.use(bodyParser.json());
 
 // DB Config
@@ -33,6 +33,8 @@ const dbKey = process.env.MONGODB_URI;
 //   }
 // });
 
+//Trying to debug DB
+mongoose.set("debug", true);
 // Connect to Mongo
 mongoose
   .connect(dbKey || dbDev, { useNewUrlParser: true, useUnifiedTopology: true })
