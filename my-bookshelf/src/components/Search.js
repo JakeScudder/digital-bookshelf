@@ -16,8 +16,6 @@ const SearchForm = (props) => {
 
   const [results, setResults] = useState([]);
 
-  const myKey = process.env.API_KEY;
-
   //Handles the form submission, passes info to handleSearch props
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -35,6 +33,8 @@ const SearchForm = (props) => {
 
   //Handles Api Fetch
   const handleSearch = (query) => {
+    let myKey = process.env.API_KEY;
+    console.log(myKey);
     axios
       .get(
         `https://www.googleapis.com/books/v1/volumes?q=${query}&key=${myKey}`
