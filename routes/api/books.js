@@ -28,6 +28,7 @@ router.post("/", (req, res) => {
   // req.setTimeout(70000);
   let maxImage;
 
+  //Added chrome buildpack to retrieve amazon results
   //Fetches higher quality image with Promise
   const promise = new Promise((resolve, reject) => {
     bookcovers.withIsbn(req.body.isbn).then((res) => {
