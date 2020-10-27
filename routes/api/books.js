@@ -29,6 +29,7 @@ router.post("/", (req, res) => {
   let maxImage;
   //Fetches higher quality image
   bookcovers.withIsbn(req.body.isbn).then((res) => {
+    console.log("getting book cover");
     if (res.amazon["3x"]) {
       maxImage = res.amazon["3x"];
     } else if (res.amazon["2.5x"]) {
@@ -36,34 +37,56 @@ router.post("/", (req, res) => {
     } else if (res.amazon["2x"]) {
       maxImage = res.amazon["2x"];
     }
-    console.log("maxImage", maxImage);
-  });
+  })
+  //debug heroku
+  .then(() => {
+    console.log("now adding book to db")
+    const newBook = new Book({
+      title: req.body.title,
+      subtitle: req.body.subtitle,
+      author: req.body.author,
+      publishedDate: req.body.publishedDate,
+      description: req.body.description,
+      image: maxImage,
+      category: req.body.category,
+    });
 
-  //Once max-image is found, add entire book to database
-  let checkExist = setInterval(() => {
-    if (maxImage) {
-      console.log("exists");
-      clearInterval(checkExist);
-      const newBook = new Book({
-        title: req.body.title,
-        subtitle: req.body.subtitle,
-        author: req.body.author,
-        publishedDate: req.body.publishedDate,
-        description: req.body.description,
-        image: maxImage,
-        category: req.body.category,
-      });
+    newBook
+      .save()
+      .then((book) => res.json(book))
+      .catch((err) =>
+        res
+          .status(500)
+          .json({ success: false }, "books.js: post route broken", err)
+      );
+  })
 
-      newBook
-        .save()
-        .then((book) => res.json(book))
-        .catch((err) =>
-          res
-            .status(500)
-            .json({ success: false }, "books.js: post route broken", err)
-        );
-    }
-  }, 1000);
+  //First iteration of addBook
+  // //Once max-image is found, add entire book to database
+  // let checkExist = setInterval(() => {
+  //   if (maxImage) {
+  //     console.log("exists");
+  //     clearInterval(checkExist);
+  //     const newBook = new Book({
+  //       title: req.body.title,
+  //       subtitle: req.body.subtitle,
+  //       author: req.body.author,
+  //       publishedDate: req.body.publishedDate,
+  //       description: req.body.description,
+  //       image: maxImage,
+  //       category: req.body.category,
+  //     });
+
+  //     newBook
+  //       .save()
+  //       .then((book) => res.json(book))
+  //       .catch((err) =>
+  //         res
+  //           .status(500)
+  //           .json({ success: false }, "books.js: post route broken", err)
+  //       );
+  //   }
+  // }, 1000);
 });
 
 // @route DELETE api/books/:id
