@@ -18,21 +18,6 @@ const dbDev = require("./config/keys").mongoURI;
 //Heroku
 const dbKey = process.env.MONGODB_URI;
 
-//Heroku Fails
-// var uristring =
-//   process.env.MONGODB_URI ||
-//   process.env.MONGOLAB_URI ||
-//   process.env.MONGOHQ_URL ||
-//   db;
-
-// mongoose.connect(uristring, function (err, res) {
-//   if (err) {
-//     console.log("ERROR connecting to: " + uristring + ". " + err);
-//   } else {
-//     console.log("Succeeded connected to: " + uristring);
-//   }
-// });
-
 //Trying to debug DB
 mongoose.set("debug", true);
 // Connect to Mongo

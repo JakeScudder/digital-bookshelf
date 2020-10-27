@@ -25,6 +25,7 @@ router.get("/", (req, res) => {
 // @access Public
 router.post("/", (req, res) => {
   console.log("server", req.body);
+  req.setTimeout(70000);
   let maxImage;
   //Fetches higher quality image
   bookcovers.withIsbn(req.body.isbn).then((res) => {
@@ -53,37 +54,16 @@ router.post("/", (req, res) => {
         category: req.body.category,
       });
 
-      newBook.save().then((book) => res.json(book));
+      newBook
+        .save()
+        .then((book) => res.json(book))
+        .catch((err) =>
+          res
+            .status(500)
+            .json({ success: false }, "books.js: post route broken", err)
+        );
     }
   }, 1000);
-
-  //*****Second Iteration
-  // setTimeout(() => {
-  //   const newBook = new Book({
-  //     title: req.body.title,
-  //     subtitle: req.body.subtitle,
-  //     author: req.body.author,
-  //     publishedDate: req.body.publishedDate,
-  //     description: req.body.description,
-  //     image: maxImage,
-  //     category: req.body.category,
-  //   });
-
-  //   newBook.save().then((book) => res.json(book));
-  // }, 15000);
-
-  //*****First iteration
-  // const newBook = new Book({
-  //   title: req.body.title,
-  //   subtitle: req.body.subtitle,
-  //   author: req.body.author,
-  //   publishedDate: req.body.publishedDate,
-  //   description: req.body.description,
-  //   image: maxImage,
-  //   category: req.body.category,
-  // });
-
-  // newBook.save().then((book) => res.json(book));
 });
 
 // @route DELETE api/books/:id
@@ -96,3 +76,31 @@ router.delete("/:id", (req, res) => {
 });
 
 module.exports = router;
+
+//*****Second Iteration
+// setTimeout(() => {
+//   const newBook = new Book({
+//     title: req.body.title,
+//     subtitle: req.body.subtitle,
+//     author: req.body.author,
+//     publishedDate: req.body.publishedDate,
+//     description: req.body.description,
+//     image: maxImage,
+//     category: req.body.category,
+//   });
+
+//   newBook.save().then((book) => res.json(book));
+// }, 15000);
+
+//*****First iteration
+// const newBook = new Book({
+//   title: req.body.title,
+//   subtitle: req.body.subtitle,
+//   author: req.body.author,
+//   publishedDate: req.body.publishedDate,
+//   description: req.body.description,
+//   image: maxImage,
+//   category: req.body.category,
+// });
+
+// newBook.save().then((book) => res.json(book));
