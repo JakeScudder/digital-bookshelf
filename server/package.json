@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Server side of digital bookshelf",
   "main": "server.js",
+  "engines": {
+    "node": "12.x"
+  },
   "scripts": {
     "client-install": "npm install --prefix ../my-bookshelf",
     "start": "node server.js",
