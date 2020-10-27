@@ -37,7 +37,7 @@ const dbKey = process.env.MONGODB_URI;
 mongoose
   .connect(dbKey || dbDev, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log("MongoDB Connected"))
-  .catch((err) => console.log(err));
+  .catch((err) => console.log("Mongo did not connect", err));
 
 //Use Routes
 app.use("/api/books", books);
@@ -47,7 +47,7 @@ if (process.env.NODE_ENV === "production") {
   //Set static folder
   app.use(express.static("my-bookshelf/build"));
 
-  app.get("*", (req, res) => {
+  app.get("/", (req, res) => {
     res.sendFile(
       path.resolve(__dirname, "my-bookshelf", "build", "index.html")
     );
