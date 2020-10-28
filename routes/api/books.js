@@ -29,7 +29,7 @@ router.post("/", (req, res) => {
   let maxImage;
 
   //Fetches higher quality image with Promise
-  const promise = new Promise((resolve, reject) => {
+  const promise = new Promise((resolve, reject) => { 
     bookcovers.withIsbn(req.body.isbn).then((res) => {
       console.log("getting book cover response:", res);
 

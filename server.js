@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const path = require("path");
-// const cors = require("cors");
+const cors = require("cors");
 
 const books = require("./routes/api/books");
 
@@ -26,6 +26,7 @@ mongoose
   .then(() => console.log("MongoDB Connected"))
   .catch((err) => console.log("Mongo did not connect", err));
 
+app.use(cors());
 //Use Routes
 app.use("/api/books", books);
 
