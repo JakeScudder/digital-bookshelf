@@ -4,9 +4,6 @@ const router = express.Router();
 //Cover images
 const bookcovers = require("bookcovers");
 
-//Debugging chrome error
-puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']});
-
 // Book model
 const Book = require("../../models/Book");
 
@@ -31,23 +28,45 @@ router.post("/", (req, res) => {
   // req.setTimeout(70000);
   let maxImage;
 
-  //Added chrome buildpack to retrieve amazon results
-  //Added puppeteer buildpack
   //Fetches higher quality image with Promise
   const promise = new Promise((resolve, reject) => {
     bookcovers.withIsbn(req.body.isbn).then((res) => {
       console.log("getting book cover response:", res);
-      if (res.amazon["3x"]) {
-        maxImage = res.amazon["3x"];
-        resolve(res)
-      } 
-      if (res.amazon["2.5x"]) {
-        maxImage = res.amazon["2.5x"];
-        resolve(res)
-      } 
-      if (res.amazon["2x"]) {
-        maxImage = res.amazon["2x"];
-        resolve(res)
+      // if (res.amazon["3x"]) {
+      //   maxImage = res.amazon["3x"];
+      //   resolve(res)
+      // } 
+      // if (res.amazon["2.5x"]) {
+      //   maxImage = res.amazon["2.5x"];
+      //   resolve(res)
+      // } 
+      // if (res.amazon["2x"]) {
+      //   maxImage = res.amazon["2x"];
+      //   resolve(res)
+      // } 
+      if (res.openLibrary) {
+        if (res.openLibrary.large) {
+          maxImage = res.openLibrary.large;
+          resolve(res);
+        }
+        if (res.openLibrary.medium) {
+          maxImage = res.openLibrary.medium;
+          resolve(res);
+        }
+        if (res.openLibrary.small) {
+          maxImage = res.openLibrary.small;
+          resolve(res);
+        }
+      }
+      if (res.google.thumbnail) {
+        console.log(res.google.thumbnail)
+        maxImage = res.google.thumbnail;
+        resolve(res);
+      }
+      if (res.google.smallThumbnail ) {
+        console.log(res.google.smallThumbnail)
+        maxImage = res.google.smallThumbnail;
+        resolve(res);
       } else {
         const error = { success: false }
         reject(error)
