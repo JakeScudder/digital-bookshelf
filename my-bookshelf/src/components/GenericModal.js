@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 
+//By separating the Modal component, I make sure that only one modal is opened at a time.
 const GenericModal = (props) => {
   const {
     className,

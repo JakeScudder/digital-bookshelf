@@ -12,6 +12,7 @@ import {
 } from "reactstrap";
 
 const NavBar = (props) => {
+  //NavBar toggler is only really needed for the phone screen
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);

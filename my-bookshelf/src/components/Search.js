@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { withRouter } from "react-router";
 import { Link } from "react-router-dom";
-import { Jumbotron } from "reactstrap";
+import { Jumbotron, Button} from "reactstrap";
 
 import axios from "axios";
 // import apiKey from "../apiKey";
@@ -18,7 +18,7 @@ const SearchForm = (props) => {
 
   const myKey = process.env.REACT_APP_API_KEY;
 
-  //Handles the form submission, passes info to handleSearch props
+  //Handles the form submission, passes info to handleSearch func
   const handleSubmit = (e) => {
     e.preventDefault();
     let searchUrl = `/search/${search}`;
@@ -33,9 +33,10 @@ const SearchForm = (props) => {
     setSearch(e.target.value);
   };
 
-  //Handles Api Fetch
+  //Handles Api Fetch to search for books
   const handleSearch = (query) => {
-    console.log(myKey);
+    let emptyArray = [];
+    setResults(emptyArray);
     axios
       .get(
         `https://www.googleapis.com/books/v1/volumes?q=${query}&key=${myKey}`
@@ -65,11 +66,10 @@ const SearchForm = (props) => {
     formattedData.publishedDate = data.publishedDate;
     formattedData.description = data.description;
     formattedData.isbn = data.industryIdentifiers[1].identifier;
-    //Temporary has lower res image
-    // TODO: fetch better quality image here or in api
     formattedData.image = data.imageLinks.thumbnail;
     //TODO: category
     console.log("formattedData:", formattedData);
+    //Calls the redux addBook function
     props.addBook(formattedData);
   };
 
@@ -132,21 +132,14 @@ const SearchForm = (props) => {
                     <h3 className="result-published-date">{publishedDate}</h3>
                     <p className="result-description">{description}</p>
                     <p className="lead">
-                      {/* <Button
+                    <Link to="/">
+                      <Button
                         onClick={() => handleAddBook(index)}
                         className="add-book"
                         color="primary"
-                      >
-                        Add to Bookshelf
-                      </Button> */}
-                      <Link
-                        onClick={() => handleAddBook(index)}
-                        className="add-book"
-                        color="primary"
-                        to="/"
-                      >
-                        Add to Bookshelf
-                      </Link>
+                      >Add to Bookshelf
+                      </Button>
+                    </Link>
                     </p>
                   </Jumbotron>
                 )

@@ -34,17 +34,21 @@ router.post("/", (req, res) => {
       console.log("getting book cover response:", res);
 
       if (res.amazon) {
+        console.log("choosing Amazon image");
         if (res.amazon["3x"]) {
           maxImage = res.amazon["3x"];
-          resolve(res)
+          resolve(res);
+          return;
         } 
         if (res.amazon["2.5x"]) {
           maxImage = res.amazon["2.5x"];
-          resolve(res)
+          resolve(res);
+          return;
         } 
         if (res.amazon["2x"]) {
           maxImage = res.amazon["2x"];
-          resolve(res)
+          resolve(res);
+          return;
         } 
       }
 
@@ -52,25 +56,28 @@ router.post("/", (req, res) => {
         if (res.openLibrary.large) {
           maxImage = res.openLibrary.large;
           resolve(res);
+          return;
         }
         if (res.openLibrary.medium) {
           maxImage = res.openLibrary.medium;
           resolve(res);
+          return;
         }
         if (res.openLibrary.small) {
           maxImage = res.openLibrary.small;
           resolve(res);
+          return;
         }
       }
       if (res.google.thumbnail) {
-        console.log(res.google.thumbnail)
         maxImage = res.google.thumbnail;
         resolve(res);
+        return;
       }
       if (res.google.smallThumbnail ) {
-        console.log(res.google.smallThumbnail)
         maxImage = res.google.smallThumbnail;
         resolve(res);
+        return;
       } else {
         const error = { success: false }
         reject(error)

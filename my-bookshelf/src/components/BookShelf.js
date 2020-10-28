@@ -34,19 +34,6 @@ const BookShelf = (props) => {
   return (
     <div>
       <Container className="bookshelf-container">
-        {/* <Button
-          dark="true"
-          className="bg-primary"
-          style={{ marginBottom: ".5rem" }}
-          onClick={() => {
-            const title = prompt("Add Book Title");
-            if (title) {
-              setBooks((books) => books.concat({ id: uuidv4(), title }));
-            }
-          }}
-        >
-          Add Book
-        </Button> */}
         {props.loading ? <Spinner color="primary" /> : null}
         {props.addBookLoading ? (
           <div id="add-book-loading-spinner">
