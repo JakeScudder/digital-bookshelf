@@ -32,7 +32,7 @@ router.post("/", (req, res) => {
   const promise = new Promise((resolve, reject) => {
     bookcovers.withIsbn(req.body.isbn).then((res) => {
       console.log("getting book cover response:", res);
-      
+
       if (res.amazon) {
         if (res.amazon["3x"]) {
           maxImage = res.amazon["3x"];
@@ -96,6 +96,7 @@ router.post("/", (req, res) => {
       newBook
         .save()
         .then((book) => res.json(book))
+        .catch(err => res.json({success: false}, "Mongo save data error:", err))
     })
     .catch(err => {
       res.status(500).send({success: false}, "Failed to add book:", err);
