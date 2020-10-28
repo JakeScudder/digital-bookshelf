@@ -32,18 +32,22 @@ router.post("/", (req, res) => {
   const promise = new Promise((resolve, reject) => {
     bookcovers.withIsbn(req.body.isbn).then((res) => {
       console.log("getting book cover response:", res);
-      if (res.amazon["3x"]) {
-        maxImage = res.amazon["3x"];
-        resolve(res)
-      } 
-      if (res.amazon["2.5x"]) {
-        maxImage = res.amazon["2.5x"];
-        resolve(res)
-      } 
-      if (res.amazon["2x"]) {
-        maxImage = res.amazon["2x"];
-        resolve(res)
-      } 
+      
+      if (res.amazon) {
+        if (res.amazon["3x"]) {
+          maxImage = res.amazon["3x"];
+          resolve(res)
+        } 
+        if (res.amazon["2.5x"]) {
+          maxImage = res.amazon["2.5x"];
+          resolve(res)
+        } 
+        if (res.amazon["2x"]) {
+          maxImage = res.amazon["2x"];
+          resolve(res)
+        } 
+      }
+
       if (res.openLibrary) {
         if (res.openLibrary.large) {
           maxImage = res.openLibrary.large;
