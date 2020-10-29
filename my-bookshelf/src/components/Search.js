@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Jumbotron, Button} from "reactstrap";
 
 import axios from "axios";
-// import apiKey from "../apiKey";
+import apiKey from "../apiKey";
 
 //Redux
 import { connect } from "react-redux";
@@ -39,7 +39,7 @@ const SearchForm = (props) => {
     setResults(emptyArray);
     axios
       .get(
-        `https://www.googleapis.com/books/v1/volumes?q=${query}&key=${myKey}`
+        `https://www.googleapis.com/books/v1/volumes?q=${query}&key=${apiKey}`
       )
       .then((res) => {
         let apiResults = res.data.items;

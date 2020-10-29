@@ -1,10 +1,12 @@
 import axios from "axios";
+
 import {
   GET_BOOKS,
   ADD_BOOK,
   DELETE_BOOK,
   BOOKS_LOADING,
   ADD_BOOK_LOADING,
+  SORT_BOOK_AZ
 } from "./types";
 
 export const getBooks = () => (dispatch) => {
@@ -18,6 +20,23 @@ export const getBooks = () => (dispatch) => {
         type: GET_BOOKS,
         payload: res.data,
       });
+    })
+    .catch((err) => {
+      console.log("getBook action error:", err);
+    });
+};
+
+export const sortBookAZ = () => (dispatch) => {
+  console.log("sortBookAZ redux Function");
+  dispatch(setBooksLoading());
+  axios
+    .get("/api/books/sort-AZ")
+    .then((res) => {
+      console.log("sortedBooks:", res.data)
+      dispatch({
+        type: SORT_BOOK_AZ,
+        payload: res.data,
+      })
     })
     .catch((err) => {
       console.log("getBook action error:", err);
@@ -49,7 +68,7 @@ export const deleteBook = (id) => (dispatch) => {
   axios.delete(`/api/books/${id}`).then((res) => {
     dispatch({
       type: DELETE_BOOK,
-      payload: res.id,
+      payload: res.data,
     });
   });
 };

@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import Search from "./components/Search";
 import BookShelf from "./components/BookShelf";
+import BookShelfAZ from "./components/BookShelfAZ";
 
 //Redux
 import { Provider } from "react-redux";
@@ -21,6 +22,9 @@ function App() {
           <Switch>
             <Route exact path="/">
               <BookShelf />
+            </Route>
+            <Route exact path="/sort-by-title">
+              <BookShelfAZ />
             </Route>
             <Route path="/search">
               <Search />

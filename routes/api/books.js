@@ -13,7 +13,21 @@ const Book = require("../../models/Book");
 router.get("/", (req, res) => {
   console.log("hit books.js home route");
   Book.find()
-    .sort({ date: -1 })
+    .sort({ dateAdded: -1 })
+    .then((books) => res.json(books))
+    .catch((err) =>
+      res.status(404).json({ success: false }, "get route broken", err)
+    );
+});
+
+// @route GET api/books
+// @desc Get All Books and sort from A - Z
+// @access Public
+router.get("/sort-AZ", (req, res) => {
+  console.log("sorting books A - Z");
+  // collation({locale:'en',strength: 2})
+  Book.find()
+    .sort({title:1})
     .then((books) => res.json(books))
     .catch((err) =>
       res.status(404).json({ success: false }, "get route broken", err)

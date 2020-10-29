@@ -4,6 +4,7 @@
 
 html {
   scroll-behavior: smooth;
+  height: 100%;
 }
 
 .book-list {
@@ -16,7 +17,7 @@ html {
 }
 
 .list-group {
-  overflow-y: auto;
+  overflow-x: auto;
 }
 
 /******* Search Component*/
@@ -95,7 +96,25 @@ html {
 @media screen and (min-width: 1441px) and (min-height: 775px) {
   .bookshelf-container {
     max-width: 1540px;
-    margin-top: 2rem;
+    margin-top: 3rem;
+  }
+
+  .book-cover {
+    height: 625px;
+    width: 418px;
+  }
+
+  .nav-container {
+    max-width: 85%;
+  }
+}
+
+/* Wide and Tall Desktop*/
+@media screen and (min-width: 1441px) and (min-height: 1000px) {
+  .bookshelf-container {
+    max-width: 1540px;
+    margin-top: 8%;
+    margin-bottom: 8%;
   }
 
   .nav-container {

@@ -1,5 +1,6 @@
 import {
   GET_BOOKS,
+  SORT_BOOK_AZ,
   DELETE_BOOK,
   ADD_BOOK,
   BOOKS_LOADING,
@@ -20,6 +21,12 @@ export default function (state = initialState, action) {
         bookData: action.payload,
         loading: false,
       };
+      case SORT_BOOK_AZ:
+        return {
+          ...state,
+          bookData: action.payload,
+          loading: false,
+        };
     case DELETE_BOOK:
       return {
         ...state,
