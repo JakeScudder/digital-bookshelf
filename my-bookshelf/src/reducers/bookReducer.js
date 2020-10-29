@@ -36,7 +36,7 @@ export default function (state = initialState, action) {
     case ADD_BOOK:
       return {
         ...state,
-        bookData: [...state.bookData, action.payload],
+        bookData: [ action.payload, ...state.bookData],
         addBookLoading: false,
       };
 

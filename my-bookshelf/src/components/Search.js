@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Jumbotron, Button} from "reactstrap";
 
 import axios from "axios";
-import apiKey from "../apiKey";
+// import apiKey from "../apiKey";
 
 //Redux
 import { connect } from "react-redux";
@@ -39,7 +39,7 @@ const SearchForm = (props) => {
     setResults(emptyArray);
     axios
       .get(
-        `https://www.googleapis.com/books/v1/volumes?q=${query}&key=${apiKey}`
+        `https://www.googleapis.com/books/v1/volumes?q=${query}&key=${myKey}`
       )
       .then((res) => {
         let apiResults = res.data.items;
@@ -59,8 +59,14 @@ const SearchForm = (props) => {
     console.log("AddBook function");
     let data = results[index];
     console.log(data);
+
+    //Help Sort Function, remove The
+    let regex = new RegExp(/^The\s/g); 
+    let removeThe = data.title.replace(regex, "")
+
     let formattedData = {};
     formattedData.title = data.title;
+    formattedData.titleAZ = removeThe;
     formattedData.subtitle = data.subtitle;
     formattedData.author = data.authors[0];
     formattedData.publishedDate = data.publishedDate;

@@ -25,9 +25,9 @@ router.get("/", (req, res) => {
 // @access Public
 router.get("/sort-AZ", (req, res) => {
   console.log("sorting books A - Z");
-  // collation({locale:'en',strength: 2})
+  //TODO: Maybe move regex expression to a searchable database parameter when book is added to database.
   Book.find()
-    .sort({title:1})
+    .sort({ titleAZ: 1 })
     .then((books) => res.json(books))
     .catch((err) =>
       res.status(404).json({ success: false }, "get route broken", err)
@@ -106,6 +106,7 @@ router.post("/", (req, res) => {
       console.log("now adding book to db")
       const newBook = new Book({
         title: req.body.title,
+        titleAZ: req.body.titleAZ,
         subtitle: req.body.subtitle,
         author: req.body.author,
         publishedDate: req.body.publishedDate,
