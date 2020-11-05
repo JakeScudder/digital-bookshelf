@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { Jumbotron, Button} from "reactstrap";
 
 import axios from "axios";
-// import apiKey from "../apiKey";
+import apiKey from "../apiKey";
 
 //Redux
 import { connect } from "react-redux";
@@ -16,7 +16,7 @@ const SearchForm = (props) => {
 
   const [results, setResults] = useState([]);
 
-  const myKey = process.env.REACT_APP_API_KEY;
+  // const myKey = process.env.REACT_APP_API_KEY;
 
   //Handles the form submission, passes info to handleSearch func
   const handleSubmit = (e) => {
@@ -39,7 +39,7 @@ const SearchForm = (props) => {
     setResults(emptyArray);
     axios
       .get(
-        `https://www.googleapis.com/books/v1/volumes?q=${query}&key=${myKey}`
+        `https://www.googleapis.com/books/v1/volumes?q=${query}&key=${apiKey}`
       )
       .then((res) => {
         let apiResults = res.data.items;
