@@ -21,12 +21,19 @@ html {
 }
 
 /******* NavBar.js*/
+#add-book-link {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
+
 #github-link {
   margin-right: 1rem;
 }
+
 .register-user-link {
   margin-left: 1rem;
 }
+
 #logout-link {
   margin-left: 1rem;
 }

@@ -9,6 +9,9 @@ import {
   SORT_BOOK_AZ
 } from "./types";
 
+import { tokenConfig } from "./authActions";
+import { returnErrors } from "./errorActions";
+
 export const getBooks = () => (dispatch) => {
   console.log("getBook action");
   dispatch(setBooksLoading());
@@ -23,6 +26,7 @@ export const getBooks = () => (dispatch) => {
     })
     .catch((err) => {
       console.log("getBook action error:", err);
+      dispatch(returnErrors(err.response.data, err.response.status));
     });
 };
 
@@ -43,12 +47,13 @@ export const sortBookAZ = () => (dispatch) => {
     });
 };
 
-export const addBook = (data) => (dispatch) => {
+
+export const addBook = (data) => (dispatch, getState) => {
   console.log("addBook redux action");
   // console.log(data);
   dispatch(addBookLoading());
   axios
-    .post("/api/books", data)
+    .post("/api/books", data, tokenConfig(getState))
     .then((res) => {
       console.log("addbook action response:", res.data);
       dispatch({
@@ -58,14 +63,15 @@ export const addBook = (data) => (dispatch) => {
     })
     .catch((err) => {
       console.log("addBook action error:", err);
+      dispatch(returnErrors(err.response.data, err.response.status));
     });
 };
 
-export const deleteBook = (id) => (dispatch) => {
+export const deleteBook = (id) => (dispatch, getState) => {
   console.log("deleteBook redux Function");
   // console.log("id:", id);
   dispatch(setBooksLoading());
-  axios.delete(`/api/books/${id}`).then((res) => {
+  axios.delete(`/api/books/${id}`, tokenConfig(getState)).then((res) => {
     dispatch({
       type: DELETE_BOOK,
       payload: res.data,

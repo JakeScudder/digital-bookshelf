@@ -32,15 +32,37 @@ const NavBar = (props) => {
   }
 
   const authLinks = (
-
+  <Fragment>
+  <NavItem>
+    <span className="navbar-text mr-3"><strong>{props.user ? `Welcome ${props.user.name}`: null}</strong></span>
+  </NavItem>
+    <NavItem>
+      <Logout />
+    </NavItem> 
+  </Fragment>
   );
 
-  
+  const guestLinks = (
+  <Fragment>
+   <NavItem>
+      <RegisterModal/>
+    </NavItem>
+    <NavItem>
+      <LoginModal/>
+    </NavItem>
+  </Fragment>
+  );
+
+
   return (
     <div>
       <Navbar dark expand="sm" className="bg-primary">
-        <Container className="nav-container">
-          <NavbarBrand href="/">My Bookshelf</NavbarBrand>
+        <Container className="nav-container"> 
+        { props.user ? 
+          <NavbarBrand href="/">Bookshelf for <strong> { props.user.name }</strong></NavbarBrand>
+          : 
+          <NavbarBrand href="/">Bookshelf </NavbarBrand>
+        }
           <NavbarToggler onClick={toggle} />
           <Collapse isOpen={isOpen} navbar>
             <Nav className="ml-auto" navbar>
@@ -48,23 +70,23 @@ const NavBar = (props) => {
                 <NavLink onClick={handleRedux} href="/sort-by-title">Sort A - Z</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href="/search">Add New Book</NavLink>
-              </NavItem>
-              <NavItem>
                 <NavLink href="https://github.com/JakeScudder" id="github-link">Github</NavLink>
               </NavItem>
+              {props.isAuth ? 
+              <Fragment>
+                <NavItem>
+                  <NavLink href="#">|</NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink id="add-book-link" href="/search">Add New Book</NavLink>
+                </NavItem>
+              </Fragment>
+              : null
+              }
               <NavItem>
                 <NavLink href="#">|</NavLink>
               </NavItem>
-              <NavItem>
-                <RegisterModal/>
-              </NavItem>
-              <NavItem>
-                <LoginModal/>
-              </NavItem>
-              <NavItem>
-                <Logout />
-              </NavItem>
+              { props.isAuth ? authLinks : guestLinks}
             </Nav>
           </Collapse>
         </Container>
