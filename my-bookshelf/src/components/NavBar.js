@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
 
 import {
   Collapse,
@@ -11,9 +11,14 @@ import {
   Container,
 } from "reactstrap";
 
-//Redux
+// Redux
 import { connect } from "react-redux";
 import { sortBookAZ } from "../actions/bookActions";
+
+// Components
+import RegisterModal from "./auth/RegisterModal";
+import LoginModal from "./auth/LoginModal";
+import Logout from "./auth/Logout";
 
 const NavBar = (props) => {
   //NavBar toggler is only really needed for the phone screen
@@ -25,6 +30,12 @@ const NavBar = (props) => {
     console.log("calling sortBookAZ redux")
     props.sortBookAZ();
   }
+
+  const authLinks = (
+
+  );
+
+  
   return (
     <div>
       <Navbar dark expand="sm" className="bg-primary">
@@ -40,7 +51,19 @@ const NavBar = (props) => {
                 <NavLink href="/search">Add New Book</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href="https://github.com/JakeScudder">Github</NavLink>
+                <NavLink href="https://github.com/JakeScudder" id="github-link">Github</NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink href="#">|</NavLink>
+              </NavItem>
+              <NavItem>
+                <RegisterModal/>
+              </NavItem>
+              <NavItem>
+                <LoginModal/>
+              </NavItem>
+              <NavItem>
+                <Logout />
               </NavItem>
             </Nav>
           </Collapse>
@@ -53,6 +76,8 @@ const NavBar = (props) => {
 const mapStateToProps = (state) => ({
   books: state.book.bookData,
   loading: state.book.loading,
+  isAuth: state.auth.isAuthenticated,
+  user: state.auth.user
 });
 
 const mapDispatchToProps = (dispatch) => {

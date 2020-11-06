@@ -20,6 +20,17 @@ html {
   overflow-x: auto;
 }
 
+/******* NavBar.js*/
+#github-link {
+  margin-right: 1rem;
+}
+.register-user-link {
+  margin-left: 1rem;
+}
+#logout-link {
+  margin-left: 1rem;
+}
+
 /******* Search Component*/
 .search-bar-container {
   width: 85%;
