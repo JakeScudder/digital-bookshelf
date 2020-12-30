@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { withRouter } from "react-router";
 import { Link } from "react-router-dom";
-import { Jumbotron, Button} from "reactstrap";
+import { Jumbotron, Button } from "reactstrap";
 
 import axios from "axios";
-import apiKey from "../apiKey";
+// import apiKey from "../apiKey";
 
 //Redux
 import { connect } from "react-redux";
@@ -16,7 +16,7 @@ const SearchForm = (props) => {
 
   const [results, setResults] = useState([]);
 
-  // const myKey = process.env.REACT_APP_API_KEY;
+  const myKey = process.env.REACT_APP_API_KEY;
 
   //Handles the form submission, passes info to handleSearch func
   const handleSubmit = (e) => {
@@ -39,7 +39,7 @@ const SearchForm = (props) => {
     setResults(emptyArray);
     axios
       .get(
-        `https://www.googleapis.com/books/v1/volumes?q=${query}&key=${apiKey}`
+        `https://www.googleapis.com/books/v1/volumes?q=${query}&key=${myKey}`
       )
       .then((res) => {
         let apiResults = res.data.items;
@@ -61,8 +61,8 @@ const SearchForm = (props) => {
     console.log(data);
 
     //Help Sort Function, remove The
-    let regex = new RegExp(/^The\s/g); 
-    let removeThe = data.title.replace(regex, "")
+    let regex = new RegExp(/^The\s/g);
+    let removeThe = data.title.replace(regex, "");
 
     let formattedData = {};
     formattedData.title = data.title;
@@ -100,8 +100,7 @@ const SearchForm = (props) => {
                 height="24"
                 viewBox="0 0 23 23"
                 width="24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
+                xmlns="http://www.w3.org/2000/svg">
                 <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
                 <path d="M0 0h24v24H0z" fill="none" />
               </svg>
@@ -129,8 +128,7 @@ const SearchForm = (props) => {
                     {imageLinks ? (
                       <img
                         src={imageLinks.thumbnail}
-                        alt="book-thumbnail"
-                      ></img>
+                        alt="book-thumbnail"></img>
                     ) : null}
                     <h3 className="result-title">{title}</h3>
                     <h3 className="result-subtitle">{subtitle}</h3>
@@ -138,14 +136,14 @@ const SearchForm = (props) => {
                     <h3 className="result-published-date">{publishedDate}</h3>
                     <p className="result-description">{description}</p>
                     <p className="lead">
-                    <Link to="/">
-                      <Button
-                        onClick={() => handleAddBook(index)}
-                        className="add-book"
-                        color="primary"
-                      >Add to Bookshelf
-                      </Button>
-                    </Link>
+                      <Link to="/">
+                        <Button
+                          onClick={() => handleAddBook(index)}
+                          className="add-book"
+                          color="primary">
+                          Add to Bookshelf
+                        </Button>
+                      </Link>
                     </p>
                   </Jumbotron>
                 )
