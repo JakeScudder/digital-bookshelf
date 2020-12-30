@@ -13,8 +13,9 @@ const app = express();
 // app.use(cors());
 app.use(express.json());
 
+// LOCAL DEVELOPMENT
 // DB Config
-const dbDev = config.get("mongoURI");
+// const dbDev = config.get("mongoURI");
 
 //Heroku
 const dbKey = process.env.MONGODB_URI;
@@ -24,7 +25,11 @@ mongoose.set("debug", true);
 
 // Connect to Mongo
 mongoose
-  .connect(dbKey || dbDev, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
+  .connect(dbKey || dbDev, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+  })
   .then(() => console.log("MongoDB Connected"))
   .catch((err) => console.log("Mongo did not connect", err));
 
