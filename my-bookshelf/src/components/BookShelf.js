@@ -77,7 +77,7 @@ const BookShelf = (props) => {
                       dateAdded={dateAdded}
                       category={category}
                     />
-                    <Button
+                    {props.isAuth ? <Button
                       className="remove-btn"
                       color="primary"
                       size="md"
@@ -86,6 +86,9 @@ const BookShelf = (props) => {
                       &times;
                       <Link to="/"></Link>
                     </Button>
+                    : null
+                    }
+                    
                   </ListGroupItem>
                 </CSSTransition>
               )
@@ -101,6 +104,7 @@ const mapStateToProps = (state) => ({
   books: state.book.bookData,
   loading: state.book.loading,
   addBookLoading: state.book.addBookLoading,
+  isAuth: state.auth.isAuthenticated
 });
 
 const mapDispatchToProps = (dispatch) => {

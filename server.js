@@ -1,32 +1,37 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const bodyParser = require("body-parser");
 const path = require("path");
+const config = require("config");
 
 const books = require("./routes/api/books");
+const users = require("./routes/api/users");
+const auth = require("./routes/api/auth");
 
 const app = express();
 
 // Bodyparser Middleware
 // app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json());
 
 // DB Config
-const dbDev = require("./config/keys").mongoURI;
+const dbDev = config.get("mongoURI");
 
 //Heroku
 const dbKey = process.env.MONGODB_URI;
 
 //Trying to debug DB
 mongoose.set("debug", true);
+
 // Connect to Mongo
 mongoose
-  .connect(dbKey || dbDev, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(dbKey || dbDev, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
   .then(() => console.log("MongoDB Connected"))
   .catch((err) => console.log("Mongo did not connect", err));
 
 //Use Routes
 app.use("/api/books", books);
+app.use("/api/users", users);
+app.use("/api/auth", auth);
 
 // Serve static assets if in production
 if (process.env.NODE_ENV === "production") {
