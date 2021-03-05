@@ -18,15 +18,17 @@ export default function (state = initialState, action) {
     case GET_BOOKS:
       return {
         ...state,
+        bookData: action.payload.books,
+        pages: action.payload.pages,
+        page: action.payload.page,
+        loading: false,
+      };
+    case SORT_BOOK_AZ:
+      return {
+        ...state,
         bookData: action.payload,
         loading: false,
       };
-      case SORT_BOOK_AZ:
-        return {
-          ...state,
-          bookData: action.payload,
-          loading: false,
-        };
     case DELETE_BOOK:
       return {
         ...state,
@@ -36,7 +38,7 @@ export default function (state = initialState, action) {
     case ADD_BOOK:
       return {
         ...state,
-        bookData: [ action.payload, ...state.bookData],
+        bookData: [action.payload, ...state.bookData],
         addBookLoading: false,
       };
 

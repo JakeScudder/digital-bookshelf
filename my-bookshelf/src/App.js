@@ -6,8 +6,6 @@ import Search from "./components/Search";
 import BookShelf from "./components/BookShelf";
 import BookShelfAZ from "./components/BookShelfAZ";
 
-//Redux
-import { Provider } from "react-redux";
 import store from "./store";
 import { loadUser } from "./actions/authActions";
 
@@ -18,27 +16,20 @@ class App extends Component {
   componentDidMount() {
     store.dispatch(loadUser());
   }
-  
+
   render() {
     return (
-      <Provider store={store}>
-        <div className="App">
-          <BrowserRouter>
-            <NavBar />
-            <Switch>
-              <Route exact path="/">
-                <BookShelf />
-              </Route>
-              <Route exact path="/sort-by-title">
-                <BookShelfAZ />
-              </Route>
-              <Route path="/search">
-                <Search />
-              </Route>
-            </Switch>
-          </BrowserRouter>
-        </div>
-      </Provider>
+      <div className="App">
+        <BrowserRouter>
+          <NavBar />
+          <Switch>
+            <Route exact path="/sort-by-title" component={BookShelfAZ} />
+            <Route path="/search" component={Search} />
+            <Route exact path="/page/:pageNumber" component={BookShelf} />
+            <Route exact path="/" component={BookShelf} />
+          </Switch>
+        </BrowserRouter>
+      </div>
     );
   }
 }

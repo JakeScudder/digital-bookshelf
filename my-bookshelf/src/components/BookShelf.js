@@ -10,23 +10,34 @@ import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { Link } from "react-router-dom";
 
 import GenericModal from "./GenericModal";
+import Paginate from "./Paginate";
 
 //Redux
-import { connect, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getBooks, deleteBook } from "../actions/bookActions";
 
-const BookShelf = (props) => {
+const BookShelf = ({ match }) => {
   const dispatch = useDispatch();
 
+  const bookData = useSelector((state) => state.book.bookData);
+  const page = useSelector((state) => state.book.page);
+  const pages = useSelector((state) => state.book.pages);
+  const loading = useSelector((state) => state.loading);
+  const isAuth = useSelector((state) => state.isAuth);
+  const addBookLoading = useSelector((state) => state.addBookLoading);
+
+  console.log(match);
+  const pageNumber = match.params.pageNumber || 1;
+
   useEffect(() => {
-    dispatch(getBooks());
-  }, [dispatch]);
+    dispatch(getBooks(pageNumber));
+  }, [dispatch, pageNumber]);
 
   const handleDelete = (id) => {
     console.log(id);
     const confirmation = prompt("Please type 'Delete'");
     if (confirmation === "Delete") {
-      props.deleteBook(id);
+      dispatch(deleteBook(id));
     }
     window.location.reload();
   };
@@ -34,8 +45,8 @@ const BookShelf = (props) => {
   return (
     <div>
       <Container className="bookshelf-container">
-        {props.loading ? <Spinner color="primary" /> : null}
-        {props.addBookLoading ? (
+        {loading ? <Spinner color="primary" /> : null}
+        {addBookLoading ? (
           <div id="add-book-loading-spinner">
             <Spinner color="primary"></Spinner>
             <h4>
@@ -44,9 +55,9 @@ const BookShelf = (props) => {
             </h4>
           </div>
         ) : null}
-        <ListGroup>
+        <ListGroup style={{ marginBottom: "2rem" }}>
           <TransitionGroup className="book-list">
-            {props.books.map(
+            {bookData.map(
               ({
                 _id,
                 title,
@@ -63,8 +74,7 @@ const BookShelf = (props) => {
                     <img
                       className="book-cover"
                       src={image}
-                      alt="Book Cover"
-                    ></img>
+                      alt="Book Cover"></img>
 
                     <GenericModal
                       id={_id}
@@ -77,41 +87,26 @@ const BookShelf = (props) => {
                       dateAdded={dateAdded}
                       category={category}
                     />
-                    {props.isAuth ? <Button
-                      className="remove-btn"
-                      color="primary"
-                      size="md"
-                      onClick={() => handleDelete(_id)}
-                    >
-                      &times;
-                      <Link to="/"></Link>
-                    </Button>
-                    : null
-                    }
-                    
+                    {isAuth ? (
+                      <Button
+                        className="remove-btn"
+                        color="primary"
+                        size="md"
+                        onClick={() => handleDelete(_id)}>
+                        &times;
+                        <Link to="/"></Link>
+                      </Button>
+                    ) : null}
                   </ListGroupItem>
                 </CSSTransition>
               )
             )}
           </TransitionGroup>
         </ListGroup>
+        <Paginate pages={pages} page={page} />
       </Container>
     </div>
   );
 };
 
-const mapStateToProps = (state) => ({
-  books: state.book.bookData,
-  loading: state.book.loading,
-  addBookLoading: state.book.addBookLoading,
-  isAuth: state.auth.isAuthenticated
-});
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    getBooks: () => dispatch(getBooks),
-    deleteBook: (id) => dispatch(deleteBook(id)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(BookShelf);
+export default BookShelf;

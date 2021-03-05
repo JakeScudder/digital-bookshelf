@@ -11,11 +11,20 @@ const Book = require("../../models/Book");
 // @route GET api/books
 // @desc Get All Books
 // @access Public
-router.get("/", (req, res) => {
-  console.log("hit books.js home route");
-  Book.find()
+router.get("/", async (req, res) => {
+  const pageSize = 7;
+  const page = Number(req.query.pageNumber) || 1;
+  console.log("page:", page);
+  console.log("req.query:", req.query);
+
+  const count = await Book.countDocuments();
+  await Book.find()
     .sort({ dateAdded: -1 })
-    .then((books) => res.json(books))
+    .limit(pageSize)
+    .skip(pageSize * (page - 1))
+    .then((books) =>
+      res.json({ books, page, pages: Math.ceil(count / pageSize) })
+    )
     .catch((err) =>
       res.status(404).json({ success: false }, "get route broken", err)
     );
@@ -44,7 +53,7 @@ router.post("/", auth, (req, res) => {
   let maxImage;
 
   //Fetches higher quality image with Promise
-  const promise = new Promise((resolve, reject) => { 
+  const promise = new Promise((resolve, reject) => {
     bookcovers.withIsbn(req.body.isbn).then((res) => {
       console.log("getting book cover response:", res);
 
@@ -54,17 +63,17 @@ router.post("/", auth, (req, res) => {
           maxImage = res.amazon["3x"];
           resolve(res);
           return;
-        } 
+        }
         if (res.amazon["2.5x"]) {
           maxImage = res.amazon["2.5x"];
           resolve(res);
           return;
-        } 
+        }
         if (res.amazon["2x"]) {
           maxImage = res.amazon["2x"];
           resolve(res);
           return;
-        } 
+        }
       }
 
       if (res.openLibrary) {
@@ -89,22 +98,22 @@ router.post("/", auth, (req, res) => {
         resolve(res);
         return;
       }
-      if (res.google.smallThumbnail ) {
+      if (res.google.smallThumbnail) {
         maxImage = res.google.smallThumbnail;
         resolve(res);
         return;
       } else {
-        const error = { success: false }
-        reject(error)
+        const error = { success: false };
+        reject(error);
       }
-    })
-  })
+    });
+  });
 
   //Will not build book until promise resolves
   promise
     //debug heroku
     .then(() => {
-      console.log("now adding book to db")
+      console.log("now adding book to db");
       const newBook = new Book({
         title: req.body.title,
         titleAZ: req.body.titleAZ,
@@ -119,11 +128,13 @@ router.post("/", auth, (req, res) => {
       newBook
         .save()
         .then((book) => res.json(book))
-        .catch(err => res.json({success: false}, "Mongo save data error:", err))
+        .catch((err) =>
+          res.json({ success: false }, "Mongo save data error:", err)
+        );
     })
-    .catch(err => {
-      res.status(500).send({success: false}, "Failed to add book:", err);
-    })
+    .catch((err) => {
+      res.status(500).send({ success: false }, "Failed to add book:", err);
+    });
 });
 
 // @route DELETE api/books/:id

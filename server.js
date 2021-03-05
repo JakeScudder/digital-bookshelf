@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const path = require("path");
 const config = require("config");
+const dotenv = require("dotenv");
 
 const books = require("./routes/api/books");
 const users = require("./routes/api/users");
@@ -9,13 +10,11 @@ const auth = require("./routes/api/auth");
 
 const app = express();
 
+dotenv.config();
+
 // Bodyparser Middleware
 // app.use(cors());
 app.use(express.json());
-
-// LOCAL DEVELOPMENT
-// DB Config
-// const dbDev = config.get("mongoURI");
 
 //Heroku
 const dbKey = process.env.MONGODB_URI;
@@ -25,7 +24,7 @@ mongoose.set("debug", true);
 
 // Connect to Mongo
 mongoose
-  .connect(dbKey || dbDev, {
+  .connect(dbKey || process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
