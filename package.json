@@ -17,6 +17,7 @@
   "author": "Jake Morris",
   "license": "MIT",
   "dependencies": {
+    "babel-jest": "^26.6.3",
     "bcryptjs": "^2.4.3",
     "bookcovers": "0.0.2",
     "concurrently": "^5.3.0",
